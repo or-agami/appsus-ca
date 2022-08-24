@@ -1,0 +1,13 @@
+.book-preview {
+    cursor: pointer;
+    background-color: aliceblue;
+    padding: 10px;
+}
+
+.book-preview .book-title {
+    text-transform: capitalize;
+}
+
+.book-preview img {
+    width: 100%;
+}

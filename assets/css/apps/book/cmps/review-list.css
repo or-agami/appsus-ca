@@ -1,0 +1,12 @@
+.review-list {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.review-list .review {
+    padding: 3px 16px;
+    border-radius: 10px;
+    background-color: #f0f8ff;
+}

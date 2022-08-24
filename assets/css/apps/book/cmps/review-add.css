@@ -1,0 +1,16 @@
+.review-add {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+    max-width: 680px;
+    justify-content: space-between;
+}
+
+.review-add form {
+    display: flex;
+    flex-direction: column;
+}
+
+.review-add form>*:not(label) {
+    margin-bottom: 10px;
+}

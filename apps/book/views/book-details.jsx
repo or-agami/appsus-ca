@@ -1,4 +1,4 @@
-import { utilService } from "../../../services/util.service"
+import { utilService } from "../../../services/util.service.js"
 import { bookService } from "../services/book.service.js"
 import { ReviewAdd } from "../cmps/review-add.jsx"
 const { Link } = ReactRouterDOM

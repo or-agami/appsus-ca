@@ -6,6 +6,7 @@ export const utilService = {
     padNum,
     getDayName,
     getMonthName,
+    getFormatPrice,
 }
 
 function makeId(length = 6) {
@@ -59,4 +60,24 @@ function getMonthName(date) {
         "July", "August", "September", "October", "November", "December"
     ]
     return monthNames[date.getMonth()]
+}
+
+
+function getFormatPrice(currencyCode, amount) {
+    let price = `${amount} `
+    switch (currencyCode) {
+        case 'EUR':
+            price += '€'
+            break
+        case 'ILS':
+            price += '₪'
+            break
+        case 'USD':
+            price += '$'
+            break
+        default:
+            price += currencyCode
+            break
+    }
+    return price
 }
