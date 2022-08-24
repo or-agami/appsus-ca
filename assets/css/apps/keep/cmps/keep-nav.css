@@ -1,5 +1,26 @@
 .keep-nav {
     display: flex;
     flex-direction: column;
-    max-width: 280px;
+    width: 240px;
+}
+
+.keep-nav .btn {
+    cursor: pointer;
+    display: flex;
+    height: 48px;
+    gap: 40px;
+    font-size: 20px;
+    padding: 0 20px;
+    align-items: center;
+    background-color: transparent;
+    border: none;
+    border-radius: 0 25px 25px 0;
+}
+
+.keep-nav .btn.active {
+    background-color: var(--keeps-active-ctg-clr);
+}
+
+.keep-nav .btn:not(.active):hover {
+    background-color: var(--keeps-icon-clr);
 }

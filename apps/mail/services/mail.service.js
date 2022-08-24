@@ -39,6 +39,8 @@ const gEmails = [
 
 function query() {
     let emails = gEmails
+    return Promise.resolve(emails)
+}
     // let emails = _loadFromStorage() || gEmails
     // _saveToStorage(emails)
     // if (filterBy) {
@@ -51,8 +53,7 @@ function query() {
     //         car.speed <= maxSpeed
     //     ))
     // }
-    return Promise.resolve(emails)
-}
+
 
 
 function getUser() {
@@ -74,5 +75,10 @@ function _loadFromStorage() {
     return storageService.loadFromStorage(KEY)
 }
 
+function removeMail(mailId) {
+    const mails = gEmails
+    mails.filter(mail => mail.id !== mailId) 
+    return Promise.resolve() 
+}
 
 

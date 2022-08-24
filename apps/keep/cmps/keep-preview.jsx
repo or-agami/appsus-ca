@@ -1,12 +1,78 @@
 
 const { Link } = ReactRouterDOM
 
-export function KeepPreview({ keep }) {
+export class KeepPreview extends React.Component {
+
+    state = {
+        // keep: this.props.keep,
+    }
+
+    getKeepContent = () => {
+        const { keep } = this.props
+        switch (keep.type) {
+            case 'keep-txt':
+                return <KeepTxt keep={keep} />
+            case 'keep-img':
+                return <KeepImg keep={keep} />
+            case 'keep-videos':
+                return <KeepVideo keep={keep} />
+            case 'keep-todos':
+                return <KeepTodo keep={keep} />
+            default:
+                return console.warn('Unknown keep type')
+        }
+    }
+
+    render() {
+        const { keep } = this.props
+
+        return (
+            <Link to={"/keep/" + keep.id}>
+                {this.getKeepContent()}
+            </Link>
+        )
+    }
+}
+
+function KeepTxt({ keep }) {
     return (
-        <Link to={"/keep/" + keep.id}>
-            <div className="keep-preview">
-                <h3 className="keep-title">{keep.type}</h3>
-            </div>
-        </Link>
+        <div className="keep-preview keep-txt">
+            <h2>KeepTxt</h2>
+            {keep.info.title &&
+                <h2 className="keep-title">{keep.info.title}</h2>}
+            <p>{keep.info.txt}</p>
+        </div>
+    )
+}
+
+function KeepImg({ keep }) {
+    return (
+        <div className="keep-preview keep-img">
+            <h2>KeepImg</h2>
+            {keep.info.title &&
+                <h2 className="keep-title">{keep.info.title}</h2>}
+            <img src={keep.info.url} alt="Keep Image" />
+        </div>
+    )
+}
+
+function KeepVideo({ keep }) {
+    return (
+        <div className="keep-preview keep-video">
+            <h2>KeepVideo</h2>
+            {keep.info.title &&
+                <h2 className="keep-title">{keep.info.title}</h2>}
+        </div>
+    )
+}
+
+function KeepTodo({ keep }) {
+    return (
+        <div className="keep-preview keep-todo">
+            <h2>KeepTodo</h2>
+            {keep.info.title &&
+                <h2 className="keep-title">{keep.info.title}</h2>}
+            {keep.info.todos.map((todo, idx) => { <p key={idx}>{todo}</p> })}
+        </div>
     )
 }
