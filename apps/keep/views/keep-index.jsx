@@ -5,10 +5,11 @@ import { KeepHeader } from "../cmps/keep-Header.jsx"
 import { KeepAdd } from "../cmps/keep-add.jsx"
 import { KeepNav } from "../cmps/keep-nav.jsx"
 
-export class NoteIndex extends React.Component {
+export class KeepIndex extends React.Component {
 
     state = {
         keeps: [],
+        keep: null,
         selectedKeep: null,
         filterBy: null,
     }
@@ -22,12 +23,20 @@ export class NoteIndex extends React.Component {
             .then((keeps) => this.setState({ keeps }))
     }
 
+    keepAdd = () => {
+        keepService.keepAdd(this.state.keep)
+            .then(() => this.setState({ keep: null }))
+    }
+
     render() {
         const { keeps } = this.state
         return (
-            <section className="keep-index">
-                <div>keep app</div>
-                <KeepList keeps={keeps} />
+            <section className="main-layout keep-index">
+                <KeepNav keeps={keeps} />
+                <div className="main-content">
+                    <KeepAdd keeps={keeps} />
+                    <KeepList keeps={keeps} />
+                </div>
             </section>
         )
     }

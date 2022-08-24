@@ -6,5 +6,7 @@
 
 /* || CMPS || */
 
+@import './cmps/keep-nav.css';
+@import './cmps/keep-add.css';
 @import './cmps/keep-list.css';
 @import './cmps/keep-preview.css';

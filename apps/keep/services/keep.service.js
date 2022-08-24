@@ -75,6 +75,7 @@ function keepAdd(keep) {
     let keeps = _loadFromStorage()
     keeps = [keep, ...keeps]
     _saveToStorage(keeps)
+    return Promise.resolve()
 }
 
 function _saveToStorage(keeps) {

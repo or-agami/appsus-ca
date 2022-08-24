@@ -1,3 +1,6 @@
-export function MailPreview() {
-    return <div>hi from mail Preview</div>
+// import { mailService } from "../services/mail.service.js"
+
+export function MailPreview({mail}) {
+    
+    return <article>hi</article>
 }
