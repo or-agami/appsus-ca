@@ -31,7 +31,8 @@ export class MailDetails extends React.Component {
 
     render() {
         return <article className="mail-details">
-            <h2>mail</h2>
+            <h2>{mail.subject} <span>{mail.sentAt}</span></h2>
+            <p>{mail.body}</p>
         </article>
     }
 }
