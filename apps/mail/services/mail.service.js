@@ -1,7 +1,9 @@
+import { storageService } from "../../../services/storage.service.js"
 export const mailService = {
     query,
     getUser,
-    getById
+    getById,
+    removeMail
 }
 
 const KEY = 'EmailsDB'
@@ -38,7 +40,9 @@ const gEmails = [
 
 
 function query() {
-    let emails = gEmails
+    let emails = _loadFromStorage()
+    if(!emails) emails = gEmails
+    _saveToStorage(emails)
     return Promise.resolve(emails)
 }
     // let emails = _loadFromStorage() || gEmails
@@ -64,6 +68,7 @@ function getById(mailId) {
     // if (!mailId) return Promise.resolve(null)
     const mails = _loadFromStorage()
     const mail = mails.find(mail => mailId === mail.id)
+
     return Promise.resolve(mail)
 }
 
@@ -76,8 +81,9 @@ function _loadFromStorage() {
 }
 
 function removeMail(mailId) {
-    const mails = gEmails
-    mails.filter(mail => mail.id !== mailId) 
+    let mails = _loadFromStorage()
+    mails = mails.filter(mail => mail.id !== mailId) 
+   _saveToStorage(mails)
     return Promise.resolve() 
 }
 

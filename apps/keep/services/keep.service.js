@@ -42,22 +42,16 @@ const gKeeps = [
 ]
 
 function query(filterBy) {
+    console.log('filterBy from keepService:', filterBy)
     let keeps = _loadFromStorage()
     if (!keeps) {
         keeps = gKeeps
         _saveToStorage(keeps)
     }
 
-    // if (filterBy) {
-    //     let { title, minPrice, maxPrice } = filterBy
-    //     if (!minPrice) minPrice = 0;
-    //     if (!maxPrice) maxPrice = Infinity
-    //     keeps = keeps.filter(book => (
-    //         book.title.toUpperCase().includes(title.toUpperCase()) &&
-    //         book.listPrice.amount >= minPrice &&
-    //         book.listPrice.amount <= maxPrice
-    //     ))
-    // }
+    if (filterBy.type) {
+        keeps = keeps.filter(keep => keep.type === filterBy.type)
+    }
 
     return Promise.resolve(keeps)
 }

@@ -21,7 +21,7 @@ export class KeepIndex extends React.Component {
     }
 
     onSetFilterByType = (type) => {
-        console.log('type from KeepIndex:', type)
+        console.log('setState from KeepIndex')
         // this.setState({ filterBy: {...this.state.filterBy, type} })
         // this.setState({ filterBy: { type } })
         this.setState((prevState) => ({
@@ -29,7 +29,8 @@ export class KeepIndex extends React.Component {
                 ...prevState.filterBy,
                 type
             }
-        }))
+        }), this.loadKeeps)
+
     }
 
     loadKeeps = () => {
@@ -43,15 +44,13 @@ export class KeepIndex extends React.Component {
     }
 
     render() {
-        console.log('rendering from KeepIndex')
         const { keeps, filterBy } = this.state
-        console.log('filterBy.type from KeepIndex:', filterBy.type)
         return (
             <section className="main-layout keep-index">
                 <KeepNav onSetFilterByType={this.onSetFilterByType} filterBy={filterBy} />
                 <div className="main-content">
                     <KeepAdd keeps={keeps} />
-                    <KeepList keeps={keeps} />
+                    <KeepList keeps={keeps} filterBy={filterBy} />
                 </div>
             </section>
         )

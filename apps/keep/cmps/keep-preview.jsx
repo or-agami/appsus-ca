@@ -5,6 +5,18 @@ export class KeepPreview extends React.Component {
 
     state = {
         // keep: this.props.keep,
+        filterBy: this.props.filterBy,
+    }
+    componentDidMount() {
+        console.log('filterBy from KeepPreview (cdm):', this.props.filterBy)
+        this.setState({ filterBy: this.props.filterBy })
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (prevState.filterBy !== this.state.filterBy) {
+            console.log('filterBy from KeepPreview (cdu):', this.props.filterBy)
+            this.setState({ filterBy: this.props.filterBy })
+        }
     }
 
     getKeepContent = () => {

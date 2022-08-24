@@ -1,0 +1,4 @@
+.keep-list {
+    display: grid;
+    grid-template-columns: repeat(2, 200px);
+}

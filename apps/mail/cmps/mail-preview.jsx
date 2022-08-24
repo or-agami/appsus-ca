@@ -1,5 +1,5 @@
 // import { mailService } from "../services/mail.service.js"
-
+// const { Link } = ReactRouterDOM
 export function MailPreview({mail}) {
     const {id, subject, body, isRead, sentAt, to} = mail
     const className = isRead ? 'read' : 'unread'
