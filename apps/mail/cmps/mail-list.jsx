@@ -14,7 +14,7 @@ export function MailList({mails, onRemoveMail}) {
                    <div className="mail-preview" key={mail.id}>
                     <MailPreview mail={mail} />
                     <button onClick={() => onRemoveMail(mail.id)}>X</button>
-                    <Link to="/mail/mailDetails"><button>...</button></Link>
+                    <Link to={`/mail/details/${mail.id}`}><button>...</button></Link>
                     </div>
                 )}
         </ul>

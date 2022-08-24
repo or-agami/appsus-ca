@@ -1,0 +1,11 @@
+.color-plt {
+    position: absolute;
+    display: flex;
+    gap: 5px;
+}
+
+.color-plt>* {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+}

@@ -25,7 +25,7 @@ const gKeeps = [
             title: "Bobi and Me"
         },
         style: {
-            backgroundColor: "#00d"
+            backgroundColor: "var(--clr-plt5)"
         }
     },
     {

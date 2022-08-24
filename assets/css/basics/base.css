@@ -26,3 +26,11 @@ img {
     width: 24px;
     height: 24px;
 }
+
+button {   
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    background-color: transparent;
+    border: none;
+}

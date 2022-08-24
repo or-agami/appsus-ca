@@ -5,3 +5,7 @@
     margin: 0 auto;
     position: relative;
 }
+
+.keep-add .btns {
+    display: flex;
+}

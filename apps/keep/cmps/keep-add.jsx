@@ -32,7 +32,7 @@ export class KeepAdd extends React.Component {
                     type="text"
                     onChange={this.handleChange}
                     placeholder="Write something..." />
-                <div className="btns keep-add-btns">
+                <div className="btns btns-keep-add">
                     <button className="btn btn-svg" title="Keep Note">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="#000">
                             <path d="M10.8149 2.60571L3.28365 23.3401H0.205522L8.8774 0.590088H10.8618L10.8149 2.60571ZM17.1274 23.3401L9.58052 2.60571L9.53365 0.590088H11.518L20.2211 23.3401H17.1274ZM16.7368 14.9182V17.387H3.95552V14.9182H16.7368Z" />
