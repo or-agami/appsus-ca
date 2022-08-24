@@ -10,7 +10,7 @@ export const bookService = {
     getNextId,
 }
 
-const KEY = 'booksDB'
+const KEY = 'bookDB'
 const gBooks = [
     {
         "id": "OXeMG8wNskc",

@@ -12,7 +12,7 @@
 /* Apps */
 @import './views/home.css';
 
-@import './apps/note/views/note-index.css';
+@import './apps/keep/views/keep-index.css';
 
 @import './apps/book/main-book.css';
 
