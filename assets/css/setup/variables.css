@@ -1,3 +1,31 @@
 :root {
-    --main-bg-color: lightblue;
+    --main-bg-clr: #f6f8fc;
+    --txt-clr1: #6f7378;
+    --txt-clr2 : #1f1f1f;
+    --msg-bgc-clr:#202124;
+    --gmail-msg-txt-clr: #6a88b9;
+    --active-nav-clr: #0b57d0;
+    --gmail-new-mail-clr: #c2e7ff;
+    --search-box-clr: #eef3fc;
+    --gmail-active-ctg-clr: #d3e3fd;
+    --user-clr: #ef6c00;
+    --error-clr: #d93025;
+    --star-clr: #f7cb4d;
+    --line-border-clr: #edf0f2;
+    --notes-icon-clr: #e6e6e6;
+    --notes-active-ctg-clr:#feefc3;
+    --notes-msg-txt-clr: #f1b204;
+    --clr-plt1: #e8eaed;
+    --clr-plt2: #e6c9a8;
+    --clr-plt3: #fdcfe8;
+    --clr-plt4: #d7aefb;
+    --clr-plt5: #aecbfa;
+    --clr-plt6: #cbf0f8;
+    --clr-plt7: #a7ffeb;
+    --clr-plt8: #ccff90;
+    --clr-plt9: #fff475;
+    --clr-plt10: #fbbc04;
+    --clr-plt11: #f28b82;
+    --clr-plt-selected: #a142f4;
+
 }
