@@ -1,3 +1,13 @@
+export const eventBusService = 
+{
+    createEventEmitter,
+    showUserMsg,
+    showSuccessMsg,
+    showErrorMsg
+}
+
+
+
 function createEventEmitter() {
     const listenersMap = {}
     // Trick for DEBUG
@@ -16,16 +26,16 @@ function createEventEmitter() {
     }
 }
 
-export const eventBusService = createEventEmitter()
 
-export function showUserMsg(msg) {
+
+function showUserMsg(msg) {
     eventBusService.emit('show-user-msg', msg)
 }
 
-export function showSuccessMsg(txt) {
+function showSuccessMsg(txt) {
     showUserMsg({ txt, type: 'success' })
 }
-export function showErrorMsg(txt) {
+function showErrorMsg(txt) {
     showUserMsg({ txt, type: 'error' })
 }
 
