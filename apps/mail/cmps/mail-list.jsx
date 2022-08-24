@@ -1,3 +1,5 @@
+const {Link} = ReactRouterDOM
+
 import { MailPreview } from "./mail-preview.jsx"
 import { MailFilter } from "./mail-filter.jsx"
 
@@ -15,6 +17,7 @@ export class MailList extends React.Component {
                 <li key="3"><MailPreview /></li>
                 <li key="4"><MailPreview /></li>
             </ul>
+            <Link to={"mail/compose"}>New Email</Link>
         </section>
     }
 }

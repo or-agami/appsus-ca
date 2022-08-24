@@ -70,7 +70,7 @@ function getById(keepId) {
 }
 
 function keepAdd(keep) {
-    if (!keep) return
+    // if (!keep) return
     keep.id = utilService.makeId()
     let keeps = _loadFromStorage()
     keeps = [keep, ...keeps]
