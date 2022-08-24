@@ -2,7 +2,7 @@ const { Link } = ReactRouterDOM
 
 // import { mailService } from "../services/mail.service.js"
 import { MailPreview } from "./mail-preview.jsx"
-// import { MailFilter } from "./mail-filter.jsx"
+
 
 export function MailList({mails, onRemoveMail}) {
     
