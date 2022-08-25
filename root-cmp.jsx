@@ -5,7 +5,7 @@ import { BookIndex } from './apps/book/views/book-index.jsx'
 import { BookDetails } from './apps/book/views/book-details.jsx'
 import { MailIndex } from "./apps/mail/views/mail-index.jsx"
 import { MailCompose } from "./apps/mail/cmps/mail-compose.jsx"
-import { MailDetails } from "./apps/mail/views/mail-details.jsx"
+import { MailDetails } from "./apps/mail/cmps/mail-details.jsx"
 import { KeepIndex } from "./apps/keep/views/keep-index.jsx"
 
 const Router = ReactRouterDOM.HashRouter

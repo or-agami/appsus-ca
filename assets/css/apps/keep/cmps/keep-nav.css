@@ -10,6 +10,7 @@
     font-size: 20px;
     padding: 0 20px;
     border-radius: 0 25px 25px 0;
+    transition: background-color .15s;
 }
 
 .keep-nav .btn.active {

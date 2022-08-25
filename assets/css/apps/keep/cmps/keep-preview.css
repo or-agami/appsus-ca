@@ -1,3 +1,24 @@
+.keep-preview .btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    height: 32px;
+    width: 32px;
+    margin: 0 8px;
+    transition: background-color .15s;
+}
+
+.keep-preview .btn svg {
+    height: 20px;
+    width: 20px;
+}
+
+.keep-preview .btn:hover {
+    /* opacity: 0.87; */
+    background-color: var(--keeps-icon-clr);
+}
+
 .color-plt {
     position: absolute;
     display: flex;

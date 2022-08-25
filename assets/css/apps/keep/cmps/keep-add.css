@@ -6,6 +6,11 @@
     position: relative;
 }
 
+.keep-add .form-keep-add {
+    display: flex;
+    flex-direction: column;
+}
+
 .keep-add .btns {
     display: flex;
 }

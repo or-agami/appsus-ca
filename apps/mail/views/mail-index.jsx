@@ -1,5 +1,5 @@
 import { MailList } from "../cmps/mail-list.jsx"
-import { MailNav } from "./mail-nav.jsx"
+import { MailNav } from "../cmps/mail-nav.jsx"
 import { mailService } from "../services/mail.service.js"
 import { MailPreview } from "../cmps/mail-preview.jsx"
 import { MailFilter } from "../cmps/mail-filter.jsx"
@@ -8,7 +8,7 @@ import { MailFilter } from "../cmps/mail-filter.jsx"
 export class MailIndex extends React.Component {
     state = {
         mails: [],
-        filterBy: null,
+        filterBy: null
     }
 
     componentDidMount() {
@@ -16,8 +16,8 @@ export class MailIndex extends React.Component {
     }
 
     loadMails = () => {
-        mailService.query()
-            .then(mails => this.setState({ mails }))
+        mailService.query(this.state.filterBy)
+            .then(mails => this.setState({ mails }, console.log('mails:', mails)))
     }
 
     onRemoveMail = (mailId) => {
@@ -27,7 +27,6 @@ export class MailIndex extends React.Component {
         mails = mails.filter(mail => mail.id !== mailId)
         this.setState({ mails })
         // eventBusService.showSuccessMsg('Email Removed')
-
     }
 
 
@@ -37,12 +36,12 @@ export class MailIndex extends React.Component {
     }
 
     render() {
-        const { mails } = this.state
+        const { mails, filterBy } = this.state
         if (!mails || mails.length === 0) return <h1>loading</h1>
         const { onSetFilter, onRemoveMail } = this
         return <section>
             <h1>mail app</h1>
-            <MailNav />
+            <MailNav onSetFilter={onSetFilter}/>
             <MailFilter onSetFilter={onSetFilter} />
             <MailList mails={mails} onRemoveMail={onRemoveMail} />
         </section>

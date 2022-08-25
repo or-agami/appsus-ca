@@ -21,3 +21,7 @@
 .grid {
     display: grid;
 }
+
+.btn-svg>*{
+    fill: var(--txt-clr2)
+}

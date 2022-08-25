@@ -1,22 +1,16 @@
-
-const { Link } = ReactRouterDOM
+import { keepService } from "../services/keep.service.js"
 
 export class KeepPreview extends React.Component {
 
     state = {
+        keep: null,
         keepInEdit: null,
+        keepInFocus: false,
         filterBy: this.props.filterBy,
     }
     componentDidMount() {
-        console.log('filterBy from KeepPreview (cdm):', this.props.filterBy)
-        this.setState({ filterBy: this.props.filterBy })
-    }
-
-    componentDidUpdate(prevProps, prevState) {
-        if (prevState.filterBy !== this.state.filterBy) {
-            console.log('filterBy from KeepPreview (cdu):', this.props.filterBy)
-            this.setState({ filterBy: this.props.filterBy })
-        }
+        const { filterBy, keep } = this.props
+        this.setState({ filterBy, keep })
     }
 
     getKeepContent = () => {
@@ -36,15 +30,26 @@ export class KeepPreview extends React.Component {
     }
 
     onKeepEdit = (keepId) => {
-        console.log('keepId:', keepId)
         this.setState({ keepInEdit: keepId })
     }
 
+    onColorChange = (color) => {
+        const style = { backgroundColor: color }
+        // const { keepInEdit } = this.state
+        const keep = { ...this.state.keep, style }
+        this.setState({ keep, keepInEdit: null })
+
+        keepService.update(keep)
+    }
+
     render() {
-        const { keep } = this.props
+        const { keep } = this.state
+        if (!keep) return
         const { keepInEdit } = this.state
-        const { getKeepContent, onKeepEdit } = this
+        const { getKeepContent, onKeepEdit, onColorChange } = this
         console.log('keepInEdit:', keepInEdit)
+        console.log('keep:', keep)
+        // console.log('keep.style:', keep.style)
         return (
             <div className={`keep-preview ${keep.type}`}
                 style={{ backgroundColor: `${keep.style ? keep.style.backgroundColor : "white"}` }}>
@@ -59,7 +64,11 @@ export class KeepPreview extends React.Component {
                         onClick={() => onKeepEdit(keep.id)}>
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="#000">
                             <path
-                                d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-5-7l-3 3.72L9 13l-3 4h12l-4-5z" />
+                                d="M12 22C6.49 22 2 17.51 2 12S6.49 2 12 2s10 4.04 10 9c0 3.31-2.69 6-6 6h-1.77c-.28 0-.5.22-.5.5 0 .12.05.23.13.33.41.47.64 1.06.64 1.67A2.5 2.5 0 0 1 12 22zm0-18c-4.41 0-8 3.59-8 8s3.59 8 8 8c.28 0 .5-.22.5-.5a.54.54 0 0 0-.14-.35c-.41-.46-.63-1.05-.63-1.65a2.5 2.5 0 0 1 2.5-2.5H16c2.21 0 4-1.79 4-4 0-3.86-3.59-7-8-7z" />
+                            <circle cx="6.5" cy="11.5" r="1.5" />
+                            <circle cx="9.5" cy="7.5" r="1.5" />
+                            <circle cx="14.5" cy="7.5" r="1.5" />
+                            <circle cx="17.5" cy="11.5" r="1.5" />
                         </svg>
                     </button>
                     {/* <button className="btn btn-svg" title="Keep Video">
@@ -80,17 +89,17 @@ export class KeepPreview extends React.Component {
                 </div>
                 {keepInEdit &&
                     <div className="color-plt">
-                        <div style={{ backgroundColor: "var(--clr-plt1)" }}></div>
-                        <div style={{ backgroundColor: "var(--clr-plt2)" }}></div>
-                        <div style={{ backgroundColor: "var(--clr-plt3)" }}></div>
-                        <div style={{ backgroundColor: "var(--clr-plt4)" }}></div>
-                        <div style={{ backgroundColor: "var(--clr-plt5)" }}></div>
-                        <div style={{ backgroundColor: "var(--clr-plt6)" }}></div>
-                        <div style={{ backgroundColor: "var(--clr-plt7)" }}></div>
-                        <div style={{ backgroundColor: "var(--clr-plt8)" }}></div>
-                        <div style={{ backgroundColor: "var(--clr-plt9)" }}></div>
-                        <div style={{ backgroundColor: "var(--clr-plt10)" }}></div>
-                        <div style={{ backgroundColor: "var(--clr-plt11)" }}></div>
+                        <button onClick={() => onColorChange('var(--clr-plt1)')} style={{ backgroundColor: "var(--clr-plt1)" }}></button>
+                        <button onClick={() => onColorChange('var(--clr-plt2)')} style={{ backgroundColor: "var(--clr-plt2)" }}></button>
+                        <button onClick={() => onColorChange('var(--clr-plt3)')} style={{ backgroundColor: "var(--clr-plt3)" }}></button>
+                        <button onClick={() => onColorChange('var(--clr-plt4)')} style={{ backgroundColor: "var(--clr-plt4)" }}></button>
+                        <button onClick={() => onColorChange('var(--clr-plt5)')} style={{ backgroundColor: "var(--clr-plt5)" }}></button>
+                        <button onClick={() => onColorChange('var(--clr-plt6)')} style={{ backgroundColor: "var(--clr-plt6)" }}></button>
+                        <button onClick={() => onColorChange('var(--clr-plt7)')} style={{ backgroundColor: "var(--clr-plt7)" }}></button>
+                        <button onClick={() => onColorChange('var(--clr-plt8)')} style={{ backgroundColor: "var(--clr-plt8)" }}></button>
+                        <button onClick={() => onColorChange('var(--clr-plt9)')} style={{ backgroundColor: "var(--clr-plt9)" }}></button>
+                        <button onClick={() => onColorChange('var(--clr-plt10)')} style={{ backgroundColor: "var(--clr-plt10)" }}></button>
+                        <button onClick={() => onColorChange('var(--clr-plt11)')} style={{ backgroundColor: "var(--clr-plt11)" }}></button>
                     </div>}
             </div>
         )
