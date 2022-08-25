@@ -33,13 +33,19 @@ export class KeepAdd extends React.Component {
     }
 
 
-    handleInputFocus = () => {
-        this.setState({ isFocus: true });
+    handleFocus = () => {
+        this.setState({ isFocus: true })
+        this.props.handleFocus('KeepAdd')
     }
 
-    handleInputBlur = () => {
-        this.setState({ isFocus: false });
+    handleBlur = (ev) => {
+        // this.setState({ isFocus: false })
+        if (!ev.currentTarget.contains(ev.relatedTarget)) {
+            this.setState({ isFocus: false })
+            console.log('blur from KeepAdd')
+        }
     }
+
 
     getPlaceHolder = () => {
         const { keepType } = this.state
@@ -59,21 +65,24 @@ export class KeepAdd extends React.Component {
     }
 
     render() {
+        // const { isFocus } = this.props
         const { keepType, isFocus } = this.state
-        const { handleChange, getPlaceHolder, onChangeKeepType, handleInputFocus, handleInputBlur } = this
+        const { handleChange, getPlaceHolder, onChangeKeepType, handleFocus, handleBlur } = this
         return (
             <section className="keep-add"
-                onFocus={handleInputFocus}
-                onBlur={handleInputBlur}>
+                onBlur={(ev) => handleBlur(ev)}
+                onFocus={handleFocus}
+            // onFocus={handleFocus}
+            >
                 <form className="form form-keep-add"
                     onSubmit={(ev) => this.onKeepAdd(ev)}>
                     {isFocus &&
-                        <input className="input input-txt"
+                        <input className="input input-title"
                             name="title"
                             type="text"
                             onChange={handleChange}
                             placeholder="Title" />}
-                    <input className="input input-txt"
+                    <input className={`input input-txt ${isFocus ? 'active' : ''}`}
                         name="content"
                         type="text"
                         onChange={handleChange}

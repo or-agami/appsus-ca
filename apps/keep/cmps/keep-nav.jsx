@@ -1,4 +1,3 @@
-const { Link, NavLink, withRouter } = ReactRouterDOM
 
 export class KeepNav extends React.Component {
     state = {
@@ -14,12 +13,17 @@ export class KeepNav extends React.Component {
         this.props.onSetFilterByType(type)
     }
 
+    handleFocus = () => {
+        // this.setState({ isFocus: true })
+        this.props.handleFocus('KeepNav')
+    }
+
     render() {
-        const { onSetFilterByType } = this
+        const { onSetFilterByType, handleFocus } = this
         const { type } = this.state
         console.log('type from KeepNav:', type)
         return (
-            <nav className="btns side-nav-btns keep-nav">
+            <nav className="btns side-nav-btns keep-nav" onClick={handleFocus}>
                 <button className={`btn btn-svg ${type === null ? 'active' : ''}`}
                     onClick={() => onSetFilterByType(null)}
                     title="Keep Note">

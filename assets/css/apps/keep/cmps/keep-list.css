@@ -1,4 +1,6 @@
 .keep-list {
     display: grid;
-    grid-template-columns: repeat(2, 200px);
+    grid-template-columns: repeat(2, minmax(200px, 1fr));
+    padding: 10px;
+    gap: 10px;
 }

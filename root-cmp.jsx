@@ -18,8 +18,8 @@ export function App() {
             <Switch>
                 <Route path="/book/:bookId" component={BookDetails} />
                 <Route path="/book" component={BookIndex} />
-                <Route path="/mail/compose" component={MailCompose} />
-                <Route path="/mail/details/:mailId" component={MailDetails} />
+                {/* <Route path="/mail/compose" component={MailCompose} /> */}
+                {/* <Route path="/mail/details/:mailId" component={MailDetails} /> */}
                 <Route path="/mail" component={MailIndex} />
                 <Route path="/keep" component={KeepIndex} />
                 <Route path="/about" component={About} />

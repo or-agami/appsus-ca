@@ -1,24 +1,21 @@
-const { Link } = ReactRouterDOM
 
 // import { mailService } from "../services/mail.service.js"
 import { MailPreview } from "./mail-preview.jsx"
 
+export function MailList({ mails, onRemoveMail, onOpenMail }) {
 
-export function MailList({mails, onRemoveMail}) {
-    
-    return <section className="mail-list">
-        <div>Hello from mail list</div>
-        <ul>
-            {
-                mails.map(mail => 
-                   <div className="mail-preview" key={mail.id}>
-                    <MailPreview mail={mail} />
-                    <button onClick={() => onRemoveMail(mail.id)}>X</button>
-                    <Link to={`/mail/details/${mail.id}`}><button>...</button></Link>
-                    </div>
-                )}
-        </ul>
-        <Link to={"mail/compose"}>New Email</Link>
-    </section>
+        return <section className="mail-list">
+            <div>Hello from mail list</div>
+            <ul>
+                {
+                    mails.map(mail =>
+                        <div className="mail-preview" key={mail.id}>
+                            <MailPreview mail={mail} />
+                            <button onClick={() => onRemoveMail(mail.id)}>X</button>
+                            <button onClick={() => onOpenMail(mail.id)}>...</button>
+                        </div>
+                    )}
+            </ul>
+        </section>
 
 }

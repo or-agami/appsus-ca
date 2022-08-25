@@ -3,12 +3,17 @@ import { MailNav } from "../cmps/mail-nav.jsx"
 import { mailService } from "../services/mail.service.js"
 import { MailPreview } from "../cmps/mail-preview.jsx"
 import { MailFilter } from "../cmps/mail-filter.jsx"
+import { MailCompose } from "../cmps/mail-compose.jsx"
+import { MailDetails } from "../cmps/mail-details.jsx"
 // import {eventBusService} from "../../../services/event-bus.service.js"
 
 export class MailIndex extends React.Component {
     state = {
         mails: [],
-        filterBy: null
+        filterBy: null,
+        category: 'inbox',
+        // screen: 'mail-list'
+        mailIsOpen: null,
     }
 
     componentDidMount() {
@@ -16,7 +21,8 @@ export class MailIndex extends React.Component {
     }
 
     loadMails = () => {
-        mailService.query(this.state.filterBy)
+        const { filterBy, category } = this.state
+        mailService.query(filterBy, category)
             .then(mails => this.setState({ mails }, console.log('mails:', mails)))
     }
 
@@ -29,21 +35,50 @@ export class MailIndex extends React.Component {
         // eventBusService.showSuccessMsg('Email Removed')
     }
 
+    onChangeCategory = (category) => {
+        this.setState({ category }, this.loadMails)
+    }
 
     onSetFilter = (filterBy) => {
         this.setState({ filterBy }, this.loadMails)
         // showSuccessMsg('Filtered Cars')
     }
 
+    onOpenMail = (mailId) => {
+        this.setState({ mailIsOpen: mailId })
+    }
+
     render() {
-        const { mails, filterBy } = this.state
+        const { mails, filterBy, category, mailIsOpen } = this.state
         if (!mails || mails.length === 0) return <h1>loading</h1>
-        const { onSetFilter, onRemoveMail } = this
-        return <section>
-            <h1>mail app</h1>
-            <MailNav onSetFilter={onSetFilter}/>
-            <MailFilter onSetFilter={onSetFilter} />
-            <MailList mails={mails} onRemoveMail={onRemoveMail} />
-        </section>
+        const { onSetFilter, onRemoveMail, onChangeCategory, onOpenMail, loadMails } = this
+        return (
+            <section className="main-layout mail-index">
+                <MailNav
+                    onChangeCategory={onChangeCategory}
+                    category={category}
+                    loadMails={loadMails}
+                />
+                <div className="main-content">
+                    {/* <MailFilter
+                        onSetFilter={onSetFilter}
+                    /> */}
+                    {!mailIsOpen &&
+                        <MailList
+                            mails={mails}
+                            onRemoveMail={onRemoveMail}
+                            onOpenMail={onOpenMail}
+                        />
+                    }
+                    {mailIsOpen &&
+                        <MailDetails
+                            mailIsOpen={mailIsOpen}
+                            onOpenMail={onOpenMail}
+                        />
+                    }
+                    {/* {mailIsOpen && <MailCompose mailIsOpen={mailIsOpen} onOpenMail={onOpenMail} />} */}
+                </div>
+            </section>
+        )
     }
 }

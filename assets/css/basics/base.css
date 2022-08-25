@@ -1,5 +1,6 @@
 body {
     margin: 0;
+    height: 100vh;
 }
 
 h1,
@@ -38,5 +39,8 @@ button {
 input {
     border: none;
     padding: 8px 12px;
-    
+}
+
+input:focus {
+    outline: none;
 }

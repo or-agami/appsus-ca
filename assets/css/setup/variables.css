@@ -2,10 +2,11 @@
     --main-bg-clr: #f6f8fc;
     --txt-clr1: #6f7378;
     --txt-clr2 : #1f1f1f;
+    --hover-ctg-clr: #eaebef;
     --msg-bgc-clr:#202124;
     --gmail-msg-txt-clr: #6a88b9;
     --active-nav-clr: #0b57d0;
-    --gmail-new-mail-clr: #c2e7ff;
+    --gmail-compose-clr: #c2e7ff;
     --search-box-clr: #eef3fc;
     --gmail-active-ctg-clr: #d3e3fd;
     --user-clr: #ef6c00;
@@ -15,6 +16,7 @@
     --keeps-icon-clr: #5f636828;
     --keeps-active-ctg-clr:#feefc3;
     --keeps-msg-txt-clr: #f1b204;
+    --box-shadow: 0 1px 2px 0 #3c40434d, 0 1px 3px 1px #3c404326;
     --clr-plt1: #e8eaed;
     --clr-plt2: #e6c9a8;
     --clr-plt3: #fdcfe8;

@@ -13,6 +13,7 @@ export class KeepIndex extends React.Component {
         filterBy: {
             type: null,
         },
+        focusOn: null,
     }
 
     componentDidMount() {
@@ -27,6 +28,10 @@ export class KeepIndex extends React.Component {
                 type
             }
         }), this.loadKeeps)
+    }
+
+    handleFocus = (focusOn) => {
+        this.setState({ focusOn })
     }
 
     loadKeeps = () => {
@@ -44,14 +49,29 @@ export class KeepIndex extends React.Component {
     }
 
     render() {
-        const { onSetFilterByType, keepAdd } = this
-        const { keeps, filterBy } = this.state
+        const { onSetFilterByType, keepAdd, handleFocus } = this
+        const { keeps, filterBy, focusOn } = this.state
         return (
             <section className="main-layout keep-index">
-                <KeepNav onSetFilterByType={onSetFilterByType} filterBy={filterBy} />
+                <KeepNav
+                    onSetFilterByType={onSetFilterByType}
+                    filterBy={filterBy}
+                    handleFocus={handleFocus}
+                    focusOn={focusOn}
+                />
                 <div className="main-content">
-                    <KeepAdd keeps={keeps} onKeepAdd={keepAdd} />
-                    <KeepList keeps={keeps} filterBy={filterBy} />
+                    <KeepAdd
+                        keeps={keeps}
+                        onKeepAdd={keepAdd}
+                        handleFocus={handleFocus}
+                        focusOn={focusOn}
+                    />
+                    <KeepList
+                        keeps={keeps}
+                        filterBy={filterBy}
+                        handleFocus={handleFocus}
+                        focusOn={focusOn}
+                    />
                 </div>
             </section>
         )

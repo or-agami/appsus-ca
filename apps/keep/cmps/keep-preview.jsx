@@ -5,13 +5,21 @@ export class KeepPreview extends React.Component {
     state = {
         keep: null,
         keepInEdit: null,
-        keepInFocus: false,
+        inFocus: false,
         filterBy: this.props.filterBy,
     }
+
     componentDidMount() {
         const { filterBy, keep } = this.props
         this.setState({ filterBy, keep })
     }
+
+    // componentDidUpdate(prevProps, prevState) {
+    //     if (prevProps.focusOn !== this.props.focusOn &&
+    //         this.props.focusOn !== 'KeepPreview') {
+    //         this.setState({ inFocus: false })
+    //     }
+    // }
 
     getKeepContent = () => {
         const { keep } = this.props
@@ -33,7 +41,19 @@ export class KeepPreview extends React.Component {
         this.setState({ keepInEdit: keepId })
     }
 
+    handleFocus = () => {
+        this.setState({ inFocus: true })
+        this.props.handleFocus('KeepPreview')
+    }
+
+    handleBlur = () => {
+        setTimeout(()=>{
+            this.setState({ inFocus: false, keepInEdit: null })
+        }, 100)
+    }
+
     onColorChange = (color) => {
+        console.log('color:', color)
         const style = { backgroundColor: color }
         // const { keepInEdit } = this.state
         const keep = { ...this.state.keep, style }
@@ -45,14 +65,12 @@ export class KeepPreview extends React.Component {
     render() {
         const { keep } = this.state
         if (!keep) return
-        const { keepInEdit } = this.state
-        const { getKeepContent, onKeepEdit, onColorChange } = this
-        console.log('keepInEdit:', keepInEdit)
-        console.log('keep:', keep)
-        // console.log('keep.style:', keep.style)
+        const { keepInEdit, inFocus } = this.state
+        const { getKeepContent, onKeepEdit, onColorChange, handleFocus, handleBlur } = this
         return (
-            <div className={`keep-preview ${keep.type}`}
-                style={{ backgroundColor: `${keep.style ? keep.style.backgroundColor : "white"}` }}>
+            <div className={`keep-preview ${keep.type} ${keep.style ? keep.style.backgroundColor : 'white'}`}
+                // onFocus={handleFocus}
+                onBlur={handleBlur}>
                 {getKeepContent()}
                 <div className="btns btns-keep-preview">
                     {/* <button className="btn btn-svg" title="Keep Note">
@@ -89,21 +107,23 @@ export class KeepPreview extends React.Component {
                 </div>
                 {keepInEdit &&
                     <div className="color-plt">
-                        <button onClick={() => onColorChange('var(--clr-plt1)')} style={{ backgroundColor: "var(--clr-plt1)" }}></button>
-                        <button onClick={() => onColorChange('var(--clr-plt2)')} style={{ backgroundColor: "var(--clr-plt2)" }}></button>
-                        <button onClick={() => onColorChange('var(--clr-plt3)')} style={{ backgroundColor: "var(--clr-plt3)" }}></button>
-                        <button onClick={() => onColorChange('var(--clr-plt4)')} style={{ backgroundColor: "var(--clr-plt4)" }}></button>
-                        <button onClick={() => onColorChange('var(--clr-plt5)')} style={{ backgroundColor: "var(--clr-plt5)" }}></button>
-                        <button onClick={() => onColorChange('var(--clr-plt6)')} style={{ backgroundColor: "var(--clr-plt6)" }}></button>
-                        <button onClick={() => onColorChange('var(--clr-plt7)')} style={{ backgroundColor: "var(--clr-plt7)" }}></button>
-                        <button onClick={() => onColorChange('var(--clr-plt8)')} style={{ backgroundColor: "var(--clr-plt8)" }}></button>
-                        <button onClick={() => onColorChange('var(--clr-plt9)')} style={{ backgroundColor: "var(--clr-plt9)" }}></button>
-                        <button onClick={() => onColorChange('var(--clr-plt10)')} style={{ backgroundColor: "var(--clr-plt10)" }}></button>
-                        <button onClick={() => onColorChange('var(--clr-plt11)')} style={{ backgroundColor: "var(--clr-plt11)" }}></button>
+                        <ColorList onColorChange={onColorChange} />
                     </div>}
             </div>
         )
     }
+}
+
+function ColorList({ onColorChange }) {
+    let colors = []
+    for (let i = 1; i <= 11; i++) {
+        colors.push(<ColorPreview i={i} key={i} onColorChange={onColorChange} />)
+    }
+    return colors
+}
+
+function ColorPreview({ i, onColorChange }) {
+    return <button onClick={() => onColorChange(`plt${i}`)} style={{ backgroundColor: `var(--clr-plt${i})` }}></button>
 }
 
 function KeepTxt({ keep }) {

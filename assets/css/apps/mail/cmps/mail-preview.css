@@ -1,0 +1,13 @@
+.mail-preview {
+    display: flex;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 40px;
+    padding: 10px 0;
+    font-size: large;
+}
+
+.mail-preview div {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

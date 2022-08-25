@@ -1,9 +1,13 @@
 .keep-add {
     display: flex;
+    position: relative;
     flex-direction: column;
     width: 80%;
     margin: 0 auto;
-    position: relative;
+    box-shadow: var(--box-shadow);
+    border-radius: 10px;
+    padding: 10px;
+    transition: box-shadow .4s;
 }
 
 .keep-add .form-keep-add {
@@ -13,4 +17,8 @@
 
 .keep-add .btns {
     display: flex;
+}
+
+.keep-add .input-txt.active {
+    margin-bottom: 20px;
 }

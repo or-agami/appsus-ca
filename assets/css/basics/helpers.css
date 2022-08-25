@@ -22,6 +22,39 @@
     display: grid;
 }
 
-.btn-svg>*{
+.btn-svg>* {
     fill: var(--txt-clr2)
+}
+
+.btn {
+    cursor: pointer;
+}
+
+.side-nav-btns {
+    display: flex;
+    flex-direction: column;
+    width: 240px;
+}
+
+.side-nav-btns .btn {
+    gap: 25px;
+    font-size: 14px;
+    padding: 5px 20px;
+    border-radius: 0 25px 25px 0;
+    transition: background-color .15s;
+}
+
+.main-layout {
+    display: flex;
+    height: 100%;
+}
+
+.main-layout .main-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+#root, .app {
+    height: 100%;
 }

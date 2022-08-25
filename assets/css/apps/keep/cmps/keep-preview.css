@@ -1,3 +1,17 @@
+
+.keep-preview {
+    position: relative;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 0 2px 0 #3c40434d;
+    transition: box-shadow .4s;
+}
+
+.keep-list .keep-preview:hover {
+    box-shadow: none;
+    box-shadow: var(--box-shadow);
+}
+
 .keep-preview .btn {
     display: flex;
     justify-content: center;
@@ -19,14 +33,74 @@
     background-color: var(--keeps-icon-clr);
 }
 
+.btns-keep-preview {
+    opacity: 0;
+    transition: opacity .4s;
+}
+
+.keep-preview:hover .btns-keep-preview {
+    opacity: 1;
+}
+
 .color-plt {
     position: absolute;
     display: flex;
     gap: 5px;
+    padding: 12px;
+    background-color: white;
+    box-shadow: var(--box-shadow);
+    border-radius: 12px;
 }
 
 .color-plt>* {
     width: 28px;
     height: 28px;
     border-radius: 50%;
+}
+.keep-list .white {
+    background-color: white;
+}
+
+.keep-list .plt1 {
+    background-color: var(--clr-plt1);
+}
+
+.keep-list .plt2 {
+    background-color: var(--clr-plt2);
+}
+
+.keep-list .plt3 {
+    background-color: var(--clr-plt3);
+}
+
+.keep-list .plt4 {
+    background-color: var(--clr-plt4);
+}
+
+.keep-list .plt5 {
+    background-color: var(--clr-plt5);
+}
+
+.keep-list .plt6 {
+    background-color: var(--clr-plt6);
+}
+
+.keep-list .plt7 {
+    background-color: var(--clr-plt7);
+}
+
+.keep-list .plt8 {
+    background-color: var(--clr-plt8);
+}
+
+.keep-list .plt9 {
+    background-color: var(--clr-plt9);
+}
+
+.keep-list .plt10 {
+    background-color: var(--clr-plt10);
+}
+
+.keep-list .plt11 {
+    background-color: var(--clr-plt11);
 }

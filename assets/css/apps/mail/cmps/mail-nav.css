@@ -1,0 +1,24 @@
+.mail-nav {
+    height: 100%;
+    background-color: var(--main-bg-clr);
+}
+
+.mail-nav .btn-compose {
+    width: 140px;
+    height: 57px;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+    border-radius: 16px;
+    background-color: var(--gmail-compose-clr);
+    padding: 10px;
+    gap: 16px;
+}
+
+.mail-nav .btn.active {
+    background-color: var(--gmail-active-ctg-clr);
+}
+
+.mail-nav .btn:not(.active):hover {
+    background-color: var(--hover-ctg-clr);
+}
