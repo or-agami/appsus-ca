@@ -5,7 +5,8 @@ export const mailService = {
     getUser,
     getById,
     removeMail,
-    createMail
+    createMail,
+    getLocaleDate
 }
 
 const KEY = 'EmailsDB'
@@ -114,8 +115,10 @@ function query(filterBy, category = 'inbox') {
 }
 
 function createMail(newMail, isSent) {
+
     const { to, subject, body } = newMail
     const mail = {
+        from: loggedInUser.email,
         id: utilService.makeId(),
         subject,
         body,
@@ -126,7 +129,9 @@ function createMail(newMail, isSent) {
         labels: [],
         status: isSent ? 'sent' : 'drafts'
     }
-    gEmails = [mail, ...gEmails]
+    const mails = _loadFromStorage()
+    mails.unshift(mail)
+    _saveToStorage(mails)
     return Promise.resolve()
 }
 
@@ -136,7 +141,7 @@ function getUser() {
 }
 
 function getById(mailId) {
-    // if (!mailId) return Promise.resolve(null)
+    if (!mailId) return Promise.resolve(null)
     const mails = _loadFromStorage()
     const mail = mails.find(mail => mailId === mail.id)
     return Promise.resolve(mail)
@@ -152,9 +157,24 @@ function _loadFromStorage() {
 
 function removeMail(mailId) {
     let mails = _loadFromStorage()
-    mails = mails.filter(mail => mail.id !== mailId)
+    const mail = mails.find(mail => mail.id === mailId)
+    mail.status = 'trash'
     _saveToStorage(mails)
     return Promise.resolve()
+}
+
+function getLocaleDate(date) {
+    const isToday = (Date.now() - date < 24 * 60 * 60 * 1000)
+    return (isToday) ?
+        new Date(date).toLocaleTimeString('en-IL', {
+            hour12: false,
+            hour: '2-digit',
+            minute: '2-digit'
+        }) :
+        new Date(date).toLocaleDateString('en-IL', {
+            day: '2-digit',
+            month: 'short'
+        })
 }
 
 

@@ -1,32 +1,51 @@
 .mail-preview {
-    display: flex;;
-    height: 40px;
-    padding: 10px 0;
-    font-size: large;
+    display: flex;
+    position: relative;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    box-shadow: inset 0 -1px 0 0 rgba(100, 121, 143, 0.122);
 }
 
 .mail-preview td {
-    overflow: hidden;
+    align-items: center;
+    empty-cells: show;
+    height: 20px;
+    outline: none;
+    padding: 0;
     text-overflow: ellipsis;
     white-space: nowrap;
+    overflow: hidden;
 }
 
-.mail-preview {
-    max-width: 100vw;
+.mail-preview .td-space {
+    width: 20px;
+}
+
+.mail-preview .td-flex {
+    flex: 1;
 }
 
 .mail-preview .from {
-    flex-basis: 1;
+    width: 14%;
+    padding-left: 0;
+    padding-right: 32px;
 }
 
 .mail-preview .subject {
-    flex-basis: 1;
+    width: 15%;
+    padding-left: 0;
+    padding-right: 32px;
 }
 
 .mail-preview .body {
-    flex-basis: 5;
+    width: 35%;
+    padding-right: 10px;
+    font-size: .875rem;
 }
 
 .mail-preview .sent-at {
-    flex-basis: 1;
+    display: flex;
+    justify-content: flex-end;
+    padding-left: 0;
+    padding-right: 16px;
 }

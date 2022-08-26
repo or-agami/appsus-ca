@@ -12,8 +12,9 @@ export class MailIndex extends React.Component {
         mails: [],
         filterBy: null,
         category: 'inbox',
-        // screen: 'mail-list'
         mailIsOpen: null,
+        modalIsOpen: null,
+        composeIsOpen: null,
     }
 
     componentDidMount() {
@@ -45,29 +46,36 @@ export class MailIndex extends React.Component {
     }
 
     onOpenMail = (mailId) => {
-        this.setState({ mailIsOpen: mailId })
+        if (!mailId) return this.setState({ mailIsOpen: null})
+       this.setState({ mailIsOpen: mail.id })
+    }
+
+    onToggleCompose = (mailId) => {
+        if (!mailId) return this.setState({modalIsOpen: null })
+        this.setState({ composeIsOpen: mailId })
     }
 
     render() {
-        const { mails, filterBy, category, mailIsOpen } = this.state
-        if (!mails || mails.length === 0) return <h1>loading</h1>
-        const { onSetFilter, onRemoveMail, onChangeCategory, onOpenMail, loadMails } = this
+        const { mails, filterBy, category, mailIsOpen, modalIsOpen } = this.state
+        const { onSetFilter, onRemoveMail, onChangeCategory, onOpenMail, loadMails,  onToggleCompose } = this
         return (
             <section className="main-layout mail-index">
                 <MailNav
                     onChangeCategory={onChangeCategory}
                     category={category}
-                    loadMails={loadMails}
+                    onToggleCompose={onToggleCompose}
                 />
                 <div className="main-content">
                     {/* <MailFilter
                         onSetFilter={onSetFilter}
                     /> */}
+                    {(!mails || mails.length === 0) && <h1>No mails to display</h1>}
                     {!mailIsOpen &&
                         <MailList
                             mails={mails}
                             onRemoveMail={onRemoveMail}
                             onOpenMail={onOpenMail}
+                            onToggleCompose={onToggleCompose}
                         />
                     }
                     {mailIsOpen &&
@@ -78,6 +86,12 @@ export class MailIndex extends React.Component {
                     }
                     {/* {mailIsOpen && <MailCompose mailIsOpen={mailIsOpen} onOpenMail={onOpenMail} />} */}
                 </div>
+                {composeIsOpen && <MailCompose
+                    mailId={composeIsOpen}
+                    onToggleCompose={onToggleCompose}
+                    loadMails= {loadMails} 
+                />
+                }
             </section>
         )
     }

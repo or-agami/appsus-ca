@@ -5,7 +5,6 @@ export class MailNav extends React.Component {
 
     state = {
         category: 'inbox',
-        isModalOpen: false
     }
 
     componentDidMount() {
@@ -17,19 +16,19 @@ export class MailNav extends React.Component {
         this.props.onChangeCategory(category)
     }
 
-    onToggleNewMail = () => {
-        this.setState({ isModalOpen: !this.state.isModalOpen })
-    }
+    // onToggleNewMail = () => {
+    //     this.setState({ isModalOpen: !this.state.isModalOpen })
+    // }
 
     render() {
-        const {loadMails} = this.props
-        const { onChangeCategory, onToggleNewMail } = this
+        const {loadMails, onToggleCompose} = this.props
+        const { onChangeCategory } = this
         const { isModalOpen, category } = this.state
         return (
             <nav className="btns side-nav-btns mail-nav">
                 <button className="btn btn-svg btn-compose"
                     title="Compose"
-                    onClick={onToggleNewMail}>
+                    onClick={() => onToggleCompose(-1)}>
                     <svg height="20" width="20">
                         <path
                             d="M4.5 17q-.604 0-1.052-.448Q3 16.104 3 15.5v-11q0-.625.448-1.062Q3.896 3 4.5 3h11q.625 0 1.062.438Q17 3.875 17 4.5v11q0 .604-.438 1.052Q16.125 17 15.5 17Zm5.5-4q.833 0 1.417-.583Q12 11.833 12 11h3.5V4.5h-11V11H8q0 .833.583 1.417Q9.167 13 10 13Z" />
@@ -107,7 +106,7 @@ export class MailNav extends React.Component {
                     </svg>
                     <span>Funny</span>
                 </button>
-                {isModalOpen && <MailCompose onToggleNewMail={onToggleNewMail} loadMails={loadMails}/>}
+                {/* {isModalOpen && <MailCompose onToggleNewMail={onToggleNewMail} loadMails={loadMails}/>} */}
             </nav>
         )
     }

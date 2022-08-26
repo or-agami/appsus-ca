@@ -1,0 +1,10 @@
+.mail-compose {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    padding: 10px;
+    position: fixed;
+    transform: translate(-100%,-100%);
+    bottom: 0;
+    right: 0;
+}

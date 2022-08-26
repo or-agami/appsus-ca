@@ -36,3 +36,7 @@ export class MailDetails extends React.Component {
         )
     }
 }
+
+ // const user = mailService.getUser()
+    // if(from === user.email) from === 'Me'
+    // if(to === user.email) to === 'Me'

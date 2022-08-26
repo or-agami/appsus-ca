@@ -1,0 +1,5 @@
+.mail-index .main-content {
+    max-width: 100%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}

@@ -1,20 +1,23 @@
-// import { mailService } from "../services/mail.service.js"
+
 // const { Link } = ReactRouterDOM
+import { mailService } from "../services/mail.service.js"
 export function MailPreview({ mail }) {
-    const { from, id, subject, body, isRead, sentAt, to } = mail
+    const { from, id, subject, body, isRead, to, status } = mail
+
+    let {sentAt} = mail
+    sentAt = mailService.getLocaleDate(sentAt) 
+
     return (
         <React.Fragment>
-            <td className="from">{from}</td>
+            {status !== 'sent' && <td className="from">{from}</td>}
+            {status === 'sent' && <td className="from">{to}</td>}
+            <td className="td-space"></td>
             <td className="subject">{subject}</td>
+            <td className="td-space"></td>
             <td className="body">{body}</td>
+            <td className="td-space td-flex"></td>
             <td className="sent-at">{sentAt}</td>
+            {/* <td className="td-space"></td> */}
         </React.Fragment>
     )
 }
-
-// id: 'e101',
-//         subject: 'Miss you!',
-//         body: 'Would love to catch up sometimes',
-//         isRead: false,
-//         sentAt: 1551133930594,
-//         to: 'momo@momo.com'

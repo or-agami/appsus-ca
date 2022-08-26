@@ -1,4 +1,5 @@
-import { AppHeader } from "./cmps/app-header.jsx"
+// import { AppHeader } from "./cmps/app-header.jsx"
+import { DynamicHeader } from "./cmps/dynamic-header.jsx"
 import { About } from "./views/about.jsx"
 import { Home } from "./views/home.jsx"
 import { BookIndex } from './apps/book/views/book-index.jsx'
@@ -14,7 +15,8 @@ const { Route, Switch } = ReactRouterDOM
 export function App() {
     return <Router>
         <section className="app">
-            <AppHeader />
+            <Route path="/:page?" component={DynamicHeader} />
+            {/* <AppHeader /> */}
             <Switch>
                 <Route path="/book/:bookId" component={BookDetails} />
                 <Route path="/book" component={BookIndex} />

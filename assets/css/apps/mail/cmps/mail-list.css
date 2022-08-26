@@ -1,0 +1,9 @@
+.mail-list {
+    display: block;
+    table-layout: fixed;
+    width: 100%;
+}
+
+.mail-list>tbody {
+    display: block;
+}

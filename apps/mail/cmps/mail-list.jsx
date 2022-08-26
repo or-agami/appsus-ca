@@ -9,11 +9,11 @@ export function MailList({ mails, onRemoveMail, onOpenMail }) {
             {
                 mails.map(mail =>
                     <tr
+                        onClick={() => onOpenMail(mail.id)}
                         className={`mail-preview ${mail.isRead ? 'read' : 'unread'}`}
                         key={mail.id}>
                         <MailPreview mail={mail} />
-                        <td><button onClick={() => onRemoveMail(mail.id)}>X</button></td>
-                        <td><button onClick={() => onOpenMail(mail.id)}>...</button></td>
+                        {/* <td><button onClick={() => onRemoveMail(mail.id)}>X</button></td> */}
                     </tr>
                 )}
         </tbody>

@@ -6,7 +6,6 @@
 
 /* || CMPS || */
 
-@import './cmps/app-header.css';
 @import './cmps/review-add.css';
 @import './cmps/review-list.css';
 @import './cmps/book-list.css';
