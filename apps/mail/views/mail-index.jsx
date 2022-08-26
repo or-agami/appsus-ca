@@ -28,10 +28,11 @@ export class MailIndex extends React.Component {
     }
 
     onRemoveMail = (mailId) => {
-        let { mails } = this.state
+        // let { mails } = this.state
         mailService.removeMail(mailId)
-        mails = mails.filter(mail => mail.id !== mailId)
-        this.setState({ mails })
+        .then(this.loadMails)
+        // mails = mails.filter(mail => mail.id !== mailId)
+        // this.setState({ mails })
         // eventBusService.showSuccessMsg('Email Removed')
     }
 
@@ -50,7 +51,7 @@ export class MailIndex extends React.Component {
         } else {
             mailService.getById(mailId)
             .then(mail => {
-                if(mail.status === 'drafts'){
+                if(mail.status.includes('drafts')){
                     this.setState({ composeIsOpen: mailId })
                 } else {
                     this.setState({ mailIsOpen: mailId })

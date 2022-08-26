@@ -20,8 +20,12 @@ export class KeepIndex extends React.Component {
         this.loadKeeps()
     }
 
+    loadKeeps = () => {
+        keepService.query(this.state.filterBy)
+            .then((keeps) => this.setState({ keeps }))
+    }
+
     onSetFilterByType = (type) => {
-        console.log('setState from KeepIndex')
         this.setState((prevState) => ({
             filterBy: {
                 ...prevState.filterBy,
@@ -34,22 +38,9 @@ export class KeepIndex extends React.Component {
         this.setState({ focusOn })
     }
 
-    loadKeeps = () => {
-        keepService.query(this.state.filterBy)
-            .then((keeps) => this.setState({ keeps }))
-    }
-
-    keepEdit = (keep) => {
-        keepService.keepEdit(keep)
-    }
-
     keepAdd = (keep, keepType) => {
         keepService.keepAdd(keep, keepType)
             .then(this.loadKeeps)
-    }
-
-    onTodoClick = (keepId, idx) => {
-        keepService.onTodoClick(keepId, idx)
     }
 
     render() {

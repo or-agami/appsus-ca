@@ -26,7 +26,7 @@ const gEmails = [
         sentAt: 1551133930594,
         to: 'momo@momo.com',
         labels: [],
-        status: 'sent',
+        status: ['sent'],
     },
     {
         id: 'e102',
@@ -38,7 +38,7 @@ const gEmails = [
         sentAt: 1551133930594,
         to: 'puki@muki.com',
         labels: [],
-        status: 'sent'
+        status: ['sent']
     },
     {
         id: 'e103',
@@ -50,7 +50,7 @@ const gEmails = [
         sentAt: 1551133930594,
         to: 'user@appsus.com',
         labels: [],
-        status: 'inbox'
+        status: ['inbox']
     },
     {
         id: 'e104',
@@ -62,7 +62,7 @@ const gEmails = [
         sentAt: 1551133940594,
         to: 'user@appsus.com',
         labels: [],
-        status: 'inbox'
+        status: ['inbox']
     },
     {
         id: 'e105',
@@ -74,7 +74,7 @@ const gEmails = [
         sentAt: 1551133930594,
         to: 'user@appsus.com',
         labels: [],
-        status: 'inbox'
+        status: ['inbox']
     },
     {
         id: 'e106',
@@ -86,7 +86,7 @@ const gEmails = [
         sentAt: 1551133930594,
         to: 'user@appsus.com',
         labels: [],
-        status: 'inbox'
+        status: ['inbox']
     },
 ]
 
@@ -96,7 +96,7 @@ function query(filterBy, category = 'inbox') {
         emails = gEmails
         _saveToStorage(emails)
     }
-    emails = emails.filter(email => email.status === category)
+    emails = emails.filter(email => email.status.includes(category))
     // emails = emails.filter(email => email.status === category || email.labels.includes(category))
     // if (filterBy) {
     //     let { txt, isRead, isStared } = filterBy
@@ -121,7 +121,11 @@ function createMail(newMail, isSent) {
 }
 
 function _updateMail(newMail, isSent) {
-    if (isSent) newMail.status = 'sent'
+    if (isSent) {
+        newMail.status = ['sent']
+        newMail.sentAt = Date.now()
+    }
+    if(newMail.to === loggedInUser.email) newMail.status.push('inbox') 
     let mails = _loadFromStorage()
     const idx = mails.findIndex(mail => mail.id === newMail.id)
     mails.splice(idx, 1)
@@ -143,8 +147,10 @@ function _addMail(newMail, isSent) {
         sentAt: Date.now(),
         to,
         labels: [],
-        status: isSent ? 'sent' : 'drafts'
+        status: isSent ? ['sent'] : ['drafts']
     }
+
+    if(mail.to === loggedInUser.email) mail.status.push('inbox') 
     const mails = _loadFromStorage()
     mails.unshift(mail)
     _saveToStorage(mails)
@@ -173,11 +179,15 @@ function _loadFromStorage() {
 
 function removeMail(mailId) {
     let mails = _loadFromStorage()
-    const mail = mails.find(mail => mail.id === mailId)
-    if(mail.status = 'drafts') {
-        const idx = mails.findIndex(mail =>)
+    const idx = mails.findIndex(mail => mail.id === mailId)
+    const mail = mails[idx]
+    console.log('mail.status:', mail.status)
+    
+    if(mail.status === ['trash']) {
+        mails.splice(idx, 1)
+    } else {
+        mail.status = ['trash']
     }
-    mail.status = 'trash'
     _saveToStorage(mails)
     return Promise.resolve()
 }

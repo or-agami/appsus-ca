@@ -9,6 +9,7 @@ export const keepService = {
     update,
     // convertKeepToJpeg,
     exportAsImage,
+    toggleMarkTodo,
 }
 
 const KEY = 'keepDB'
@@ -47,6 +48,7 @@ const gKeeps = [
     },
 ]
 
+
 function query(filterBy) {
     console.log('filterBy from keepService:', filterBy)
     let keeps = _loadFromStorage()
@@ -78,11 +80,11 @@ function update(editedKeep) {
 }
 
 function toggleMarkTodo(keepId, todoIdx) {
-    getById(keepId)
+    return getById(keepId)
         .then(keep => {
-            let { doneAt } = keep.todos[todoIdx]
-            if (keep.todos[todoIdx].doneAt) keep.todos[todoIdx].doneAt = null
-            else keep.todo[todoIdx].doneAt = Date.now()
+            if (keep.info.todos[todoIdx].doneAt) keep.info.todos[todoIdx].doneAt = null
+            else keep.info.todos[todoIdx].doneAt = Date.now()
+            return (update(keep))
         })
 }
 
@@ -93,7 +95,6 @@ function keepAdd(newKeep, keepType) {
     keep.type = keepType
     keep.info = {}
     keep.info.title = newKeep.title
-    console.log('keep.info from keepService:', keep.info)
     const { content } = newKeep
     switch (keepType) {
         case 'keep-txt':

@@ -7,6 +7,10 @@
     transition: box-shadow .4s;
 }
 
+.keep-todos .done {
+    text-decoration: line-through;
+}
+
 .keep-list .keep-preview:hover {
     box-shadow: none;
     box-shadow: var(--box-shadow1);
