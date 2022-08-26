@@ -1,15 +1,14 @@
 // import { mailService } from "../services/mail.service.js"
 // const { Link } = ReactRouterDOM
 export function MailPreview({ mail }) {
-    const { id, subject, body, isRead, sentAt, to } = mail
-    const className = isRead ? 'read' : 'unread'
+    const { from, id, subject, body, isRead, sentAt, to } = mail
     return (
-        <div className={className}>
-            <span className="to">to: {to} </span>
-            <span className="subject">{subject} </span>
-            <span className="body">{body} </span>
-            <span className="sent-at">{sentAt}</span>
-        </div>
+        <React.Fragment>
+            <td className="from">{from}</td>
+            <td className="subject">{subject}</td>
+            <td className="body">{body}</td>
+            <td className="sent-at">{sentAt}</td>
+        </React.Fragment>
     )
 }
 

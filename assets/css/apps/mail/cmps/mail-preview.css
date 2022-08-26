@@ -1,13 +1,32 @@
 .mail-preview {
-    display: flex;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    display: flex;;
     height: 40px;
     padding: 10px 0;
     font-size: large;
 }
 
-.mail-preview div {
+.mail-preview td {
     overflow: hidden;
     text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.mail-preview {
+    max-width: 100vw;
+}
+
+.mail-preview .from {
+    flex-basis: 1;
+}
+
+.mail-preview .subject {
+    flex-basis: 1;
+}
+
+.mail-preview .body {
+    flex-basis: 5;
+}
+
+.mail-preview .sent-at {
+    flex-basis: 1;
 }
