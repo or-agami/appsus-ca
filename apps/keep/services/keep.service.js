@@ -1,11 +1,14 @@
 import { storageService } from '../../../services/storage.service.js'
 import { utilService } from '../../../services/util.service.js'
+const keepStyle = "../../../assets/css/cmps/keep-preview.css" // 👈 just for img export
 
 export const keepService = {
     query,
     getById,
     keepAdd,
     update,
+    // convertKeepToJpeg,
+    exportAsImage,
 }
 
 const KEY = 'keepDB'
@@ -74,6 +77,15 @@ function update(editedKeep) {
     return Promise.resolve(editedKeep)
 }
 
+function toggleMarkTodo(keepId, todoIdx) {
+    getById(keepId)
+        .then(keep => {
+            let { doneAt } = keep.todos[todoIdx]
+            if (keep.todos[todoIdx].doneAt) keep.todos[todoIdx].doneAt = null
+            else keep.todo[todoIdx].doneAt = Date.now()
+        })
+}
+
 function keepAdd(newKeep, keepType) {
     if (!newKeep) return
     let keep = {}
@@ -105,6 +117,43 @@ function keepAdd(newKeep, keepType) {
     _saveToStorage(keeps)
     return Promise.resolve()
 }
+
+// function convertKeepToJpeg(keepId) {
+//     const elKeep = document.querySelector(`.${keepId}`)
+//     html2canvas(elKeep)
+//         .then(canvas => canvas.toDataURL('image/jpeg'))
+//         .then(keepImg => {
+//             const elKeepImgLink = document.createElement('a')
+//             elKeepImgLink.href = keepImg
+//             elKeepImgLink.download = 'My Keep.jpeg'
+//             document.body.appendChild(elKeepImgLink)
+//             elKeepImgLink.click()
+//             document.body.removeChild(elKeepImgLink)
+//         })
+
+// }
+
+function exportAsImage(elClass, imageFileName) {
+    const elToExport = document.querySelector(`.${elClass}`)
+    console.log('elToExport:', elToExport)
+    html2canvas(elToExport)
+        .then(canvas => canvas.toDataURL('image/png', 1.0))
+        .then(img => downloadImage(img, imageFileName))
+}
+
+function downloadImage(img, fileName) {
+    const fakeLink = window.document.createElement("a");
+    fakeLink.style = "display:none;";
+    fakeLink.download = fileName;
+
+    fakeLink.href = img;
+
+    document.body.appendChild(fakeLink);
+    fakeLink.click();
+    document.body.removeChild(fakeLink);
+
+    fakeLink.remove();
+};
 
 function _saveToStorage(keeps) {
     storageService.saveToStorage(KEY, keeps)

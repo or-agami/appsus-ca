@@ -1,6 +1,6 @@
 import { KeepPreview } from "../cmps/keep-preview.jsx"
 
-export function KeepList({ keeps, handleFocus, focusOn }) {
+export function KeepList({ keeps, handleFocus, focusOn, onTodoClick }) {
 
     // function handleFocus() {
     //     handleFocus('KeepAdd')
@@ -13,6 +13,7 @@ export function KeepList({ keeps, handleFocus, focusOn }) {
                     key={keep.id}
                     keep={keep}
                     focusOn={focusOn}
+                    onTodoClick={onTodoClick}
                     handleFocus={handleFocus} />
             )}
         </section>

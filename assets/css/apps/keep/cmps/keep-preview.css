@@ -50,6 +50,7 @@
     background-color: white;
     box-shadow: var(--box-shadow1);
     border-radius: 12px;
+    z-index: 20;
 }
 
 .color-plt>* {

@@ -11,8 +11,6 @@ export class MailDetails extends React.Component {
 
     loadMail = () => {
         const mailId = this.props.mailIsOpen
-        console.log('mailId:', mailId)
-
         mailService.getById(mailId)
             .then(mail => {
                 if (!mail) return this.onGoBack()
@@ -27,11 +25,14 @@ export class MailDetails extends React.Component {
     render() {
         const { mail } = this.state
         if (!mail) return
+        const {onGoBack} = this
+        const {onRemoveMail} = this.props
         return (
             <article className="mail-details">
                 <h2>{mail.subject} <span>{mail.sentAt}</span></h2>
                 <p>{mail.body}</p>
-                <button onClick={this.onGoBack}>Exit</button>
+                <button onClick={onGoBack}>Exit</button>
+                <button onClick={ onRemoveMail }>Delete</button>
             </article>
         )
     }

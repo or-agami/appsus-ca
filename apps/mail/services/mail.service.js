@@ -91,31 +91,47 @@ const gEmails = [
 ]
 
 function query(filterBy, category = 'inbox') {
-    console.log('hiiii:')
     let emails = _loadFromStorage()
     if (!emails) {
         emails = gEmails
         _saveToStorage(emails)
     }
-    console.log('emails from mailService:', emails)
-    emails = emails.filter(email => email.status === category || email.labels.includes(category))
-    console.log('emails from mailService:', emails)
-    if (filterBy) {
-        let { txt, isRead, isStared } = filterBy
-        txt = txt.toLowerCase()
-        emails = emails.filter(email => (
-            (email.subject.includes(txt) || email.body.includes(txt) || email.to.includes(txt)) &&
-            (email.isRead === isRead) &&
-            ((isRead !== null) ? email.isRead === isRead : true) &&
-            ((isStared !== null) ? email.isStared === isStared : true)
-        ))
-        console.log('emails from mailService:', emails)
-    }
+    emails = emails.filter(email => email.status === category)
+    // emails = emails.filter(email => email.status === category || email.labels.includes(category))
+    // if (filterBy) {
+    //     let { txt, isRead, isStared } = filterBy
+    //     txt = txt.toLowerCase()
+    //     emails = emails.filter(email => (
+    //         (email.subject.includes(txt) || email.body.includes(txt) || email.to.includes(txt)) &&
+    //         (email.isRead === isRead) &&
+    //         ((isRead !== null) ? email.isRead === isRead : true) &&
+    //         ((isStared !== null) ? email.isStared === isStared : true)
+    //     ))
+    // }
+    console.log('emails from query2:', emails)
+    console.log('emails from query2:', emails)
+
     return Promise.resolve(emails)
 }
 
 function createMail(newMail, isSent) {
+    if (newMail.id !== null) _updateMail(newMail, isSent)
+    else _addMail(newMail, isSent)
+    return Promise.resolve()
+}
 
+function _updateMail(newMail, isSent) {
+    if (isSent) newMail.status = 'sent'
+    let mails = _loadFromStorage()
+    const idx = mails.findIndex(mail => mail.id === newMail.id)
+    mails.splice(idx, 1)
+    mails = [newMail, ...mails]
+
+    _saveToStorage(mails)
+}
+
+
+function _addMail(newMail, isSent) {
     const { to, subject, body } = newMail
     const mail = {
         from: loggedInUser.email,
@@ -132,8 +148,8 @@ function createMail(newMail, isSent) {
     const mails = _loadFromStorage()
     mails.unshift(mail)
     _saveToStorage(mails)
-    return Promise.resolve()
 }
+
 
 
 function getUser() {
@@ -158,6 +174,9 @@ function _loadFromStorage() {
 function removeMail(mailId) {
     let mails = _loadFromStorage()
     const mail = mails.find(mail => mail.id === mailId)
+    if(mail.status = 'drafts') {
+        const idx = mails.findIndex(mail =>)
+    }
     mail.status = 'trash'
     _saveToStorage(mails)
     return Promise.resolve()

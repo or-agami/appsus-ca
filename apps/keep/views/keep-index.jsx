@@ -48,6 +48,10 @@ export class KeepIndex extends React.Component {
             .then(this.loadKeeps)
     }
 
+    onTodoClick = (keepId, idx) => {
+        keepService.onTodoClick(keepId, idx)
+    }
+
     render() {
         const { onSetFilterByType, keepAdd, handleFocus } = this
         const { keeps, filterBy, focusOn } = this.state

@@ -21,9 +21,9 @@ export class MailNav extends React.Component {
     // }
 
     render() {
-        const {loadMails, onToggleCompose} = this.props
+        const { onToggleCompose} = this.props
         const { onChangeCategory } = this
-        const { isModalOpen, category } = this.state
+        const { category } = this.state
         return (
             <nav className="btns side-nav-btns mail-nav">
                 <button className="btn btn-svg btn-compose"

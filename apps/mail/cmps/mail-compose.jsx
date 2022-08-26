@@ -3,24 +3,27 @@ import { mailService } from "../services/mail.service.js"
 export class MailCompose extends React.Component {
     state = {
         mail: {
+            id: null,
             to: '',
             subject: '',
             body: '',
         }
     }
 
+    componentDidMount() {
+        this.loadMail()
+    }
+
     loadMail = () => {
-        if(this.props.mailId === -1) return
+        const { mailId } = this.props
+        if (mailId === -1) return
         mailService.getById(mailId)
-            .then(draftMail => this.setState({mail:{to, subject, body} = draftMail}, console.log(this.state.mail)))
-            // .then(draftMail => this.setState({mail:{to: draftMail.to,
-            //                                         subject: draftMail.subject,
-            //                                         body: draftMail.body}}))
+            .then((draftMail) => this.setState({ mail: draftMail }))
     }
 
     onCreateMail = (ev, isSent) => {
         ev.preventDefault()
-        this.props.onToggleNewMail()
+        this.props.onToggleCompose()
         mailService.createMail(this.state.mail, isSent)
             .then(this.props.loadMails())
 
@@ -35,14 +38,15 @@ export class MailCompose extends React.Component {
     }
 
     render() {
+        const { to, subject, body } = this.state.mail
         return (
             <section className="mail-compose">
                 <h1>hi from mail compose</h1>
                 <form>
                     <button onClick={(ev) => this.onCreateMail(ev, false)}>x</button>
-                    <input onChange={this.handleChange} name="to" type="email" placeholder="to:" />
-                    <input onChange={this.handleChange} type="text" name="subject" placeholder="subject" />
-                    <input onChange={this.handleChange} type="textarea" name="body" placeholder="body" />
+                    <input onChange={this.handleChange} name="to" value={to} type="email" placeholder="to:" />
+                    <input onChange={this.handleChange} type="text" value={subject} name="subject" placeholder="subject" />
+                    <input onChange={this.handleChange} type="textarea" value={body} name="body" placeholder="body" />
                     <button type="submit" onClick={(ev) => this.onCreateMail(ev, true)}>Send</button>
                 </form>
             </section>
