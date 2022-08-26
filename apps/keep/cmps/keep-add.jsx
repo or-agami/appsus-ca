@@ -46,6 +46,13 @@ export class KeepAdd extends React.Component {
         }
     }
 
+    onImgUpload = (ev) => {
+        if (ev.target.files && ev.target.files[0]) {
+            const img = ev.target.files[0]
+            this.setState({ imgSrc: URL.createObjectURL(img) })
+            setTimeout((ev) => onKeepAdd(ev), 200)
+        }
+    }
 
     getPlaceHolder = () => {
         const { keepType } = this.state
@@ -99,15 +106,19 @@ export class KeepAdd extends React.Component {
                                 <path d="M10.8149 2.60571L3.28365 23.3401H0.205522L8.8774 0.590088H10.8618L10.8149 2.60571ZM17.1274 23.3401L9.58052 2.60571L9.53365 0.590088H11.518L20.2211 23.3401H17.1274ZM16.7368 14.9182V17.387H3.95552V14.9182H16.7368Z" />
                             </svg>
                         </button>
-                        <button
-                            className={`btn btn-svg ${keepType === 'keep-img' ? 'active' : ''}`}
+                        {/* <button
+                            className={`btn btn-svg ${keepType === 'keep-img' ? 'active' : ''}`}>
+                        </button> */}
+                        <label
                             title="Keep Image"
-                            onClick={() => onChangeKeepType('keep-img')}>
+                            onClick={() => onChangeKeepType('keep-img')}
+                            for="file-upload" class="custom-file-upload">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="#000">
                                 <path
                                     d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-5-7l-3 3.72L9 13l-3 4h12l-4-5z" />
                             </svg>
-                        </button>
+                        </label>
+                        <input id="file-upload" type="file" onChange={this.onImgUpload} />
                         <button
                             className={`btn btn-svg ${keepType === 'keep-video' ? 'active' : ''}`}
                             title="Keep Video"

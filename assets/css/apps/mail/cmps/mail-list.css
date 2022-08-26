@@ -7,3 +7,11 @@
 .mail-list>tbody {
     display: block;
 }
+
+.unread {
+    font-weight: bold;
+}
+
+.read {
+    font-weight: normal;
+}

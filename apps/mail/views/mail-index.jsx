@@ -15,6 +15,7 @@ export class MailIndex extends React.Component {
         mailIsOpen: null,
         modalIsOpen: null,
         composeIsOpen: null,
+        unreadMails: 0,
     }
 
     componentDidMount() {
@@ -23,14 +24,18 @@ export class MailIndex extends React.Component {
 
     loadMails = () => {
         const { filterBy, category } = this.state
-        mailService.query(filterBy, category)
-            .then(mails => this.setState({ mails }, console.log('mails:', mails)))
+        if (category === 'inbox') {
+            mailService.query(filterBy, category)
+                .then(mails => this.setState({ mails, unreadMails: mails.filter(mail => !mail.isRead).length }, console.log('mails:', mails, 'unreadMails: ', mails.filter(mail => !mail.isRead).length)))
+        }
+        else mailService.query(filterBy, category)
+            .then(mails => this.setState({ mails }))
     }
 
     onRemoveMail = (mailId) => {
         // let { mails } = this.state
         mailService.removeMail(mailId)
-        .then(this.loadMails)
+            .then(this.loadMails)
         // mails = mails.filter(mail => mail.id !== mailId)
         // this.setState({ mails })
         // eventBusService.showSuccessMsg('Email Removed')
@@ -46,27 +51,32 @@ export class MailIndex extends React.Component {
     }
 
     onOpenMail = (mailId) => {
-        if (!mailId){
-            this.setState({ mailIsOpen: null})  
+        if (!mailId) {
+            this.setState({ mailIsOpen: null })
         } else {
-            mailService.getById(mailId)
-            .then(mail => {
-                if(mail.status.includes('drafts')){
-                    this.setState({ composeIsOpen: mailId })
-                } else {
-                    this.setState({ mailIsOpen: mailId })
-                }
-            })
+            // mailService.getById(mailId)
+            const mail = this.state.mails.find(mail => mailId === mail.id)
+            if (mail.status.includes('drafts')) {
+                this.setState({ composeIsOpen: mailId })
+            } else {
+                let { mails } = this.state
+                mail.isRead = true
+                const mailIdx = this.state.mails.findIndex(mail => mailId === mail.id)
+                mailService.update(mail)
+                mails.splice(mailIdx, 1, mail)
+                const unreadMails = mails.filter(mail => !mail.isRead).length
+                this.setState({ mails, mailIsOpen: mailId, unreadMails })
+            }
         }
     }
 
     onToggleCompose = (mailId) => {
-        if (!mailId) return this.setState({composeIsOpen: null })
+        if (!mailId) return this.setState({ composeIsOpen: null })
         this.setState({ composeIsOpen: mailId })
     }
 
     render() {
-        const { mails, filterBy, category, mailIsOpen, composeIsOpen } = this.state
+        const { mails, filterBy, category, mailIsOpen, composeIsOpen, unreadMails } = this.state
         const { onSetFilter, onRemoveMail, onChangeCategory, onOpenMail, loadMails, onToggleCompose } = this
         return (
             <section className="main-layout mail-index">
@@ -74,6 +84,7 @@ export class MailIndex extends React.Component {
                     onChangeCategory={onChangeCategory}
                     category={category}
                     onToggleCompose={onToggleCompose}
+                    unreadMails={unreadMails}
                 />
                 <div className="main-content">
                     {/* <MailFilter
@@ -86,6 +97,7 @@ export class MailIndex extends React.Component {
                             onRemoveMail={onRemoveMail}
                             onOpenMail={onOpenMail}
                             onToggleCompose={onToggleCompose}
+                            category={category}
                         />
                     }
                     {mailIsOpen &&
@@ -98,9 +110,9 @@ export class MailIndex extends React.Component {
                     {/* {mailIsOpen && <MailCompose mailIsOpen={mailIsOpen} onOpenMail={onOpenMail} />} */}
                 </div>
                 {composeIsOpen && <MailCompose
-                    mailId = {composeIsOpen}
-                    onToggleCompose = {onToggleCompose}
-                    loadMails = {loadMails} 
+                    mailId={composeIsOpen}
+                    onToggleCompose={onToggleCompose}
+                    loadMails={loadMails}
                 />
                 }
             </section>

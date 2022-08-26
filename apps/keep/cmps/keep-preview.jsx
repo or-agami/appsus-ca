@@ -7,6 +7,7 @@ export class KeepPreview extends React.Component {
         inFocus: false,
         filterBy: this.props.filterBy,
         isClrPltOpen: false,
+        editedContent: null,
     }
 
     componentDidMount() {
@@ -19,13 +20,28 @@ export class KeepPreview extends React.Component {
         const { handleChange, onTodoClick } = this
         switch (keep.type) {
             case 'keep-txt':
-                return <KeepTxt keep={keep} />
+                return <KeepTxt
+                    keep={keep}
+                    keepInEdit={keepInEdit}
+                    handleChange={handleChange}
+                />
             case 'keep-img':
-                return <KeepImg keep={keep} />
+                return <KeepImg
+                    keep={keep}
+                    keepInEdit={keepInEdit}
+                    handleChange={handleChange}
+                />
             case 'keep-videos':
-                return <KeepVideo keep={keep} />
+                return <KeepVideo
+                    keep={keep}
+                />
             case 'keep-todos':
-                return <KeepTodo keep={keep} keepInEdit={keepInEdit} onTodoClick={onTodoClick} handleChange={handleChange} />
+                return <KeepTodo
+                    keep={keep}
+                    keepInEdit={keepInEdit}
+                    onTodoClick={onTodoClick}
+                    handleChange={handleChange}
+                />
             default:
                 return console.warn('Unknown keep type')
         }
@@ -37,11 +53,14 @@ export class KeepPreview extends React.Component {
     }
 
     onKeepEdit = () => {
+        const { keep } = this.state
         this.setState({ keepInEdit: keep })
     }
 
     onDoneEdit = () => {
         console.log('this.state.keepInEdit:', this.state.keepInEdit)
+        const { keepInEdit } = this.state
+        keepService.update(keepInEdit)
         this.setState({ keepInEdit: null })
     }
 
@@ -49,34 +68,35 @@ export class KeepPreview extends React.Component {
         console.log('keepType:', keepType)
         const value = target.textContent
         console.log('value:', value)
-        if (keepType === 'keepTodos') {
+        if (keepType === 'keepTodo') {
             const id = +target.attributes.id.value
-            console.log('id:', id)
-            // this.setState((prevState) => ({
-            //     keepInEdit: {
-            //         ...prevState.keep,
-            //         info: {
-            //             ...prevState.info,
-            //             todos: [...todos]
-            //         }
-            //     }
-            // }))
+            const editedTodo = { txt: value, doneAt: null }
+            let todos = this.state.keepInEdit.info.todos
+            todos.splice(id, 1, editedTodo)
+            this.setState((prevState) => ({
+                keepInEdit: {
+                    ...prevState.keepInEdit,
+                    info: { ...prevState.keepInEdit.info, todos }
+                }
+            }))
+            return
+        } else if (keepType === 'keepTxt') {
+            this.setState((prevState) => ({
+                keepInEdit: {
+                    ...prevState.keepInEdit,
+                    info: { ...prevState.keepInEdit.info, txt: value }
+                }
+            }))
+            return
+        } else if (keepType === 'keepImg') {
+            this.setState((prevState) => ({
+                keepInEdit: {
+                    ...prevState.keepInEdit,
+                    info: { ...prevState.keepInEdit.info, url: value }
+                }
+            }))
+            return
         }
-        
-    //     currTodo = todos[0] 
-    //     newTodo= {...currTodo, txt: 'hello'}
-
-    //    ({todos: [...todos, currTodo: newTodo]})
-
-
-        // console.log('field from KeepPreview:', field)
-        // console.log('value from KeepPreview:', value)
-        // this.setState((prevState) => ({
-        //     newKeep: {
-        //         ...prevState.newKeep,
-        //         [field]: value
-        //     }
-        // }))
     }
 
     handleFocus = () => {
@@ -182,24 +202,41 @@ function ColorPreview({ i, onColorChange }) {
     return <button onClick={() => onColorChange(`plt${i}`)} style={{ backgroundColor: `var(--clr-plt${i})` }}></button>
 }
 
-function KeepTxt({ keep }) {
+function KeepTxt({ keep, handleChange, keepInEdit }) {
     return (
         <React.Fragment>
             <h2>KeepTxt</h2>
             {keep.info.title &&
                 <h2 className="keep-title">{keep.info.title}</h2>}
-            <p>{keep.info.txt}</p>
+            <p
+                type="text"
+                onInput={(e) => handleChange('keepTxt', e)}
+                contentEditable={keepInEdit ? 'true' : 'false'}>
+                {keep.info.txt}
+            </p>
         </React.Fragment>
     )
 }
 
-function KeepImg({ keep }) {
+function KeepImg({ keep, handleChange, keepInEdit }) {
+    console.log('keepInEdit === null:', keepInEdit === null)
     return (
         <React.Fragment>
             <h2>KeepImg</h2>
             {keep.info.title &&
                 <h2 className="keep-title">{keep.info.title}</h2>}
-            <img src={keep.info.url} alt="Keep Image" />
+            {keepInEdit === null &&
+                // <img src={keep.info.url} alt="Keep Image" />
+                <img src="https://blog.logrocket.com/wp-content/uploads/2020/01/logrocket-blog-logo.png" />
+            }
+            {keepInEdit &&
+                <p
+                    type="text"
+                    onInput={(e) => handleChange('keepImg', e)}
+                    contentEditable={keepInEdit ? 'true' : 'false'}>
+                    {keep.info.url}
+                </p>
+            }
         </React.Fragment>
     )
 }
@@ -221,7 +258,7 @@ function KeepTodo({ keep, onTodoClick, handleChange, keepInEdit }) {
             {keep.info.title &&
                 <h2 className="keep-title">{keep.info.title}</h2>}
             {keep.info.todos.map((todo, idx) => (
-                <p key={idx} className={`todo ${todo.doneAt ? 'done' : ''}`}
+                <p key={idx} className={`todo ${(todo.doneAt && !keepInEdit) ? 'done' : ''}`}
                     type="text"
                     id={idx}
                     contentEditable={keepInEdit ? 'true' : 'false'}

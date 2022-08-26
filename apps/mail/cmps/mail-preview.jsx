@@ -1,7 +1,7 @@
 
 // const { Link } = ReactRouterDOM
 import { mailService } from "../services/mail.service.js"
-export function MailPreview({ mail }) {
+export function MailPreview({ mail, category }) {
     const { from, id, subject, body, isRead, to, status } = mail
 
     let {sentAt} = mail
@@ -9,8 +9,8 @@ export function MailPreview({ mail }) {
 
     return (
         <React.Fragment>
-            {status !== 'sent' && <td className="from">{from}</td>}
-            {status === 'sent' && <td className="from">{to}</td>}
+            {(category !== 'sent' && category!== 'draft') && <td className="from">{from}</td>}
+            {(category === 'sent' || category === 'draft') && <td className="from">{to}</td>}
             <td className="td-space"></td>
             <td className="subject">{subject}</td>
             <td className="td-space"></td>

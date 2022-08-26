@@ -5,12 +5,18 @@ export class MailNav extends React.Component {
 
     state = {
         category: 'inbox',
+        unreadMails: this.props.unreadMails,
     }
 
     componentDidMount() {
-        this.setState({ category: this.props.category })
+        const { category, unreadMails } = this.props
+        this.setState({ category, unreadMails })
     }
-
+    
+    componentDidUpdate(prevProps, prevState) {
+        if (prevState.unreadMails === this.props.unreadMails) return
+        this.setState({ unreadMails: this.props.unreadMails })
+    }
     onChangeCategory = (category) => {
         this.setState({ category })
         this.props.onChangeCategory(category)
@@ -21,9 +27,9 @@ export class MailNav extends React.Component {
     // }
 
     render() {
-        const { onToggleCompose} = this.props
+        const { onToggleCompose } = this.props
         const { onChangeCategory } = this
-        const { category } = this.state
+        const { category, unreadMails } = this.state
         return (
             <nav className="btns side-nav-btns mail-nav">
                 <button className="btn btn-svg btn-compose"
@@ -43,6 +49,7 @@ export class MailNav extends React.Component {
                         </path>
                     </svg>
                     <span>Inbox</span>
+                    {unreadMails !== 0 && <span>{unreadMails}</span>}
                 </button>
                 <button className={`btn btn-svg ${category === 'sent' ? 'active' : ''}`}
                     onClick={() => onChangeCategory('sent')}

@@ -6,7 +6,8 @@ export const mailService = {
     getById,
     removeMail,
     createMail,
-    getLocaleDate
+    getLocaleDate,
+    update,
 }
 
 const KEY = 'EmailsDB'
@@ -109,7 +110,6 @@ function query(filterBy, category = 'inbox') {
     //     ))
     // }
     console.log('emails from query2:', emails)
-    console.log('emails from query2:', emails)
 
     return Promise.resolve(emails)
 }
@@ -120,12 +120,20 @@ function createMail(newMail, isSent) {
     return Promise.resolve()
 }
 
+function update(updatedMail) {
+    let mails = _loadFromStorage()
+    let mailIdx = mails.findIndex(mail => updatedMail.id === mail.id)
+    mails.splice(mailIdx, 1, updatedMail)
+    _saveToStorage(mails)
+    return Promise.resolve(updatedMail)
+}
+
 function _updateMail(newMail, isSent) {
     if (isSent) {
         newMail.status = ['sent']
         newMail.sentAt = Date.now()
     }
-    if(newMail.to === loggedInUser.email) newMail.status.push('inbox') 
+    if (newMail.to === loggedInUser.email) newMail.status.push('inbox')
     let mails = _loadFromStorage()
     const idx = mails.findIndex(mail => mail.id === newMail.id)
     mails.splice(idx, 1)
@@ -150,7 +158,7 @@ function _addMail(newMail, isSent) {
         status: isSent ? ['sent'] : ['drafts']
     }
 
-    if(mail.to === loggedInUser.email) mail.status.push('inbox') 
+    if (mail.to === loggedInUser.email) mail.status.push('inbox')
     const mails = _loadFromStorage()
     mails.unshift(mail)
     _saveToStorage(mails)
@@ -182,8 +190,8 @@ function removeMail(mailId) {
     const idx = mails.findIndex(mail => mail.id === mailId)
     const mail = mails[idx]
     console.log('mail.status:', mail.status)
-    
-    if(mail.status === ['trash']) {
+
+    if (mail.status === ['trash']) {
         mails.splice(idx, 1)
     } else {
         mail.status = ['trash']
