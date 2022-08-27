@@ -1,8 +1,12 @@
+html {
+    font-family: roboto-regular, 'Segoe UI';
+}
+
 body {
     margin: 0;
     min-height: 100vh;
     background-color: var(--main-bg-clr);
-    font-family: roboto, sans-serif;
+    font-family: roboto-regular, 'Segoe UI';
 }
 
 h1,
@@ -31,7 +35,7 @@ img {
     height: 24px;
 }
 
-button {   
+button {
     cursor: pointer;
     display: flex;
     align-items: center;

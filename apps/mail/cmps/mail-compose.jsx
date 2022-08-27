@@ -54,8 +54,8 @@ export class MailCompose extends React.Component {
         return (
             <section className="mail-compose">
                 <header>
-                    <button onClick={(ev) => this.onCreateMail(ev, false)}>x</button>
-                    <h1>New massage</h1>
+                    {/* <button onClick={(ev) => this.onCreateMail(ev, false)}>x</button> */}
+                    <h1><button onClick={(ev) => this.onCreateMail(ev, false)}>x</button><span>New massage</span></h1>
                 </header>
                 <form>
                     <div className="to">

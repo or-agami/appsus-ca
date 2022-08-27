@@ -7,6 +7,7 @@ export const keepService = {
     getById,
     keepAdd,
     update,
+    remove,
     // convertKeepToJpeg,
     exportAsImage,
     toggleMarkTodo,
@@ -167,6 +168,14 @@ function toggleMarkTodo(keepId, todoIdx) {
             else keep.info.todos[todoIdx].doneAt = Date.now()
             return (update(keep))
         })
+}
+
+function remove(keepId) {
+    let keeps = _loadFromStorage()
+    let keepIdx = keeps.findIndex(keep => keepId === keep.id)
+    keeps.splice(keepIdx, 1)
+    _saveToStorage(keeps)
+    return Promise.resolve(keeps)
 }
 
 function keepAdd(newKeep, keepType) {

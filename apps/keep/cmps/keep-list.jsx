@@ -1,6 +1,6 @@
 import { KeepPreview } from "../cmps/keep-preview.jsx"
 
-export function KeepList({ keeps, handleFocus, focusOn, onTodoClick, onTogglePinned }) {
+export function KeepList({ keeps, handleFocus, focusOn, onTodoClick, onTogglePinned, onRemoveKeep }) {
 
     return (
         <React.Fragment>
@@ -12,6 +12,7 @@ export function KeepList({ keeps, handleFocus, focusOn, onTodoClick, onTogglePin
                         focusOn={focusOn}
                         onTodoClick={onTodoClick}
                         onTogglePinned={onTogglePinned}
+                        onRemoveKeep={onRemoveKeep}
                         handleFocus={handleFocus} />
                 )}
             </section>
@@ -23,6 +24,7 @@ export function KeepList({ keeps, handleFocus, focusOn, onTodoClick, onTogglePin
                         focusOn={focusOn}
                         onTodoClick={onTodoClick}
                         onTogglePinned={onTogglePinned}
+                        onRemoveKeep={onRemoveKeep}
                         handleFocus={handleFocus} />
                 )}
             </section>

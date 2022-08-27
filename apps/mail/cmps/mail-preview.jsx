@@ -14,11 +14,10 @@ export function MailPreview({ mail, category, toggleStar, toggleRead }) {
 
     return (
         <React.Fragment>
-            <td className="mail-icons" onClick={(ev) => toggleStar(id, ev)}>
+            <td className="star" onClick={(ev) => toggleStar(id, ev)}>
                 <img src={`assets/icon/${isStared ? 'starred' : 'star'}.png`} alt="Star" />
-                <span onClick={(ev) => toggleRead(id, ev)}>✉️</span>
             </td>
-            {/* <td className="read" onClick={(ev) => toggleRead(id, ev)}>✉️</td> */}
+            <td className="read" onClick={(ev) => toggleRead(id, ev)}>✉️</td>
             {(category !== 'sent' && category !== 'draft') && <td className="from">{from}</td>}
             {(category === 'sent' || category === 'draft') && <td className="from">{to}</td>}
             <td className="td-space"></td>

@@ -47,18 +47,21 @@ class _MailDetails extends React.Component {
         const { mail } = this.state
         if (!mail) return
         const { onGoBack, onDelete, onToggleStar, onSaveMailAsKeep } = this
+        const { id, isStared, subject, body} = mail
+        let { sentAt } = mail
+        sentAt = mailService.getLocaleDate(sentAt)
         return (
             <article className="mail-details">
+                <button onClick={onGoBack}>Go Back</button>
                 <h2>
-                    <button onClick={() => onToggleStar(mail.id)}>
-                        <img src={`assets/icon/${mail.isStared ? 'starred' : 'star'}.png`} alt="Star" />
+                    <button onClick={() => onToggleStar(id)}>
+                        <img src={`assets/icon/${isStared ? 'starred' : 'star'}.png`} alt="Star" />
                     </button>
-                    {mail.subject}
-                    <span>{mail.sentAt}</span>
+                    {subject}
+                    <span>{sentAt}</span>
                 </h2>
-                <p>{mail.body}</p>
+                <p>{body}</p>
                 {/* <button onClick={toggleStar}>Star</button> */}
-                <button onClick={onGoBack}>Exit</button>
                 <button onClick={onDelete}>
                     <svg width="24" height="24" viewBox="0 0 24 24">
                         <path d="M15 4V3H9v1H4v2h1v13c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V6h1V4h-5zm2 15H7V6h10v13z"></path>

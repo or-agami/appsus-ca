@@ -7,16 +7,17 @@
     bottom: 0;
     right: 5em;
     width: 40vw;
-    height: 30vh;
-    border: 0.5px solid;
-    border-radius: 5px;
+    height: 40vh;
+    -webkit-box-shadow: -2px -3px 9px -5px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: -2px -3px 9px -5px rgba(0, 0, 0, 0.5);
+    box-shadow: -2px -3px 9px -5px rgba(0, 0, 0, 0.5);
 }
 
 .mail-compose>*:not(first-child) {
     padding: 1px;
 }
 
-.mail-compose header{
+.mail-compose header {
     flex-grow: 1;
 }
 
@@ -35,4 +36,3 @@
 .mail-compose .footer {
     flex-grow: 3;
 }
-

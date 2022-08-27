@@ -55,6 +55,11 @@ export class KeepIndex extends React.Component {
         keepService.update(keep)
     }
 
+    onRemoveKeep = (keepId) => {
+        keepService.remove(keepId)
+            .then((keeps) => this.setState({ keeps }))
+    }
+
     handleFocus = (focusOn) => {
         this.setState({ focusOn })
     }
@@ -65,7 +70,7 @@ export class KeepIndex extends React.Component {
     }
 
     render() {
-        const { onSetFilterByType, keepAdd, handleFocus, onTogglePinned } = this
+        const { onSetFilterByType, keepAdd, handleFocus, onTogglePinned, onRemoveKeep } = this
         const { keeps, filterBy, focusOn } = this.state
         return (
             <section className="main-layout keep-index">
@@ -88,6 +93,7 @@ export class KeepIndex extends React.Component {
                         handleFocus={handleFocus}
                         focusOn={focusOn}
                         onTogglePinned={onTogglePinned}
+                        onRemoveKeep={onRemoveKeep}
                     />
                 </div>
             </section>

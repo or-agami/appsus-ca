@@ -12,6 +12,20 @@
     width: calc(100% - 20px);
 }
 
+.keep-preview .keep-title {
+    max-width: 80%;
+    margin-bottom: 16px;
+}
+
+.keep-preview .space {
+    margin-bottom: 8px;
+}
+
+.keep-preview img, .keep-preview iframe {
+    border-radius: 16px;
+    border: none;
+}
+
 .keep-preview.pinned {
     box-shadow: var(--box-shadow1);
 }
@@ -97,8 +111,8 @@
     border-radius: 50%;
 }
 
-.keep-list .white {
-    background-color: white;
+.keep-list .default {
+    background-color: var(--clr-plt-default);
 }
 
 .keep-list .plt1 {

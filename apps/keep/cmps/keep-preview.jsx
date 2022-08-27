@@ -149,6 +149,10 @@ export class _KeepPreview extends React.Component {
         this.props.onTogglePinned(keepId)
     }
 
+    onRemoveKeep = (keepId) => {
+        this.props.onRemoveKeep(keepId)
+    }
+
     onColorChange = (color) => {
         const style = { backgroundColor: color }
         const keep = { ...this.state.keep, style }
@@ -168,12 +172,13 @@ export class _KeepPreview extends React.Component {
         const { keep } = this.state
         if (!keep) return
         const { keepInEdit, inFocus, isClrPltOpen } = this.state
-        const { getKeepContent, onKeepEdit, onColorChange, handleFocus, handleBlur, onToggleClrPlt, onDownloadKeep, onDoneEdit, onTogglePinned, onSendKeepAsMail } = this
+        const { getKeepContent, onKeepEdit, onColorChange, handleFocus, handleBlur, onToggleClrPlt, onDownloadKeep, onDoneEdit, onTogglePinned, onSendKeepAsMail, onRemoveKeep } = this
         return (
-            <div className={`keep-preview ${keep.id} ${keep.type} ${keep.style ? keep.style.backgroundColor : 'white'} ${keep.isPinned ? 'pinned' : ''}`}
+            <div className={`keep-preview ${keep.id} ${keep.type} ${keep.style ? keep.style.backgroundColor : 'default'} ${keep.isPinned ? 'pinned' : ''}`}
                 // onFocus={handleFocus}
                 onBlur={handleBlur}>
                 {getKeepContent()}
+                <div className="space"></div>
                 <div className="btns btns-keep-preview">
                     <button className="btn btn-svg btn-pin" title="Pin"
                         onClick={() => onTogglePinned(keep.id)}>
@@ -222,6 +227,13 @@ export class _KeepPreview extends React.Component {
                             <path d="M3.5 16q-.625 0-1.062-.438Q2 15.125 2 14.5v-9q0-.625.438-1.062Q2.875 4 3.5 4h13q.625 0 1.062.438Q18 4.875 18 5.5v9q0 .625-.438 1.062Q17.125 16 16.5 16Zm6.5-5L3.5 7.271V14.5h13V7.271Zm0-1.771L16.5 5.5h-13ZM3.5 7.271V5.5v9Z" />
                         </svg>
                     </button>
+                    <button className="btn btn-svg" title="Delete"
+                        onClick={() => onRemoveKeep(keep.id)}>
+                        <svg width="24" height="24" viewBox="0 0 24 24">
+                            <path d="M15 4V3H9v1H4v2h1v13c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V6h1V4h-5zm2 15H7V6h10v13z"></path>
+                            <path d="M9 8h2v9H9zm4 0h2v9h-2z"></path>
+                        </svg>
+                    </button>
                     {/* <button className="btn btn-svg" title="Keep Todo">
                         <svg width="24" height="24" viewBox="0 0 24 24">
                         <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"></path>
@@ -252,7 +264,7 @@ function ColorPreview({ i, onColorChange }) {
 function KeepTxt({ keep, handleChange, keepInEdit }) {
     return (
         <React.Fragment>
-            <h2>KeepTxt</h2>
+            {/* <h2>KeepTxt</h2> */}
             {keep.info.title &&
                 <h2 className="keep-title">{keep.info.title}</h2>}
             <p
@@ -269,7 +281,7 @@ function KeepTxt({ keep, handleChange, keepInEdit }) {
 function KeepImg({ keep, handleChange, keepInEdit }) {
     return (
         <React.Fragment>
-            <h2>KeepImg</h2>
+            {/* <h2>KeepImg</h2> */}
             {keep.info.title &&
                 <h2 className="keep-title">{keep.info.title}</h2>}
             {keepInEdit === null &&
@@ -294,7 +306,7 @@ function KeepImg({ keep, handleChange, keepInEdit }) {
 function KeepVideo({ keep }) {
     return (
         <React.Fragment>
-            <h2>KeepVideo</h2>
+            {/* <h2>KeepVideo</h2> */}
             {keep.info.title &&
                 <h2 className="keep-title">{keep.info.title}</h2>}
             <iframe width="100%" src={`https://www.youtube.com/embed/${keep.info.videoId}`}></iframe>
@@ -305,7 +317,7 @@ function KeepVideo({ keep }) {
 function KeepTodo({ keep, onTodoClick, handleChange, keepInEdit }) {
     return (
         <React.Fragment>
-            <h2>KeepTodo</h2>
+            {/* <h2>KeepTodo</h2> */}
             {keep.info.title &&
                 <h2 className="keep-title">{keep.info.title}</h2>}
             {keep.info.todos.map((todo, idx) => (
@@ -325,7 +337,7 @@ function KeepTodo({ keep, onTodoClick, handleChange, keepInEdit }) {
 function KeepMail({ keep }) {
     return (
         <React.Fragment>
-            <h2>KeepMail</h2>
+            {/* <h2>KeepMail</h2> */}
             {keep.info.title &&
                 <h2 className="keep-title">{keep.info.title}</h2>}
             <h3>{keep.info.subject}</h3>
