@@ -4,9 +4,12 @@
     padding: 10px;
     box-shadow: 0 0 2px 0 #3c40434d;
     transition: box-shadow .4s;
-    flex-grow: 1;
-    max-width: max-content;
-    max-height: max-content;
+    margin-bottom: 10px;
+    /* flex-grow: 1; */
+    /* max-width: max-content; */
+    /* max-height: max-content; */
+    display: inline-block;
+    width: calc(100% - 20px);
 }
 
 .keep-preview.pinned {
@@ -20,6 +23,11 @@
 .keep-list .keep-preview:hover {
     box-shadow: none;
     box-shadow: var(--box-shadow2);
+}
+
+.keep-preview .btns {
+    display: flex;
+    align-items: center;
 }
 
 .keep-preview .btn {
@@ -45,15 +53,17 @@
 
 .keep-preview .btn-pin {
     position: absolute;
-    right: 8px;
+    right: 10px;
     bottom: 10px;
+    margin: 0;
 }
 
 .keep-preview .btn-edit {
     position: absolute;
-    right: 8px;
+    right: 12px;
     top: 12px;
     scale: 1.2;
+    margin: 0;
 }
 
 .keep-preview.pinned .btn-pin:not(:hover) {

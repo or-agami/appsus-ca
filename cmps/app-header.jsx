@@ -1,4 +1,4 @@
-import { MailFilter } from '../apps/mail/cmps/mail-filter.jsx'
+import { MailSearch } from '../apps/mail/cmps/mail-search.jsx'
 import { KeepFilter } from '../apps/keep/cmps/keep-filter.jsx'
 
 const { withRouter, Link, NavLink } = ReactRouterDOM
@@ -96,7 +96,7 @@ function MailHeader() {
             <div className="header-logo mail-logo">
                 <img src="/assets/icon/mail-logo.png" alt="Mail" />
             </div>
-            {/* <MailFilter /> */}
+            <MailSearch />
         </React.Fragment>
     )
 }

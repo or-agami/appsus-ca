@@ -1,22 +1,21 @@
 /* .keep-list { */
-    /* display: flex; */
-    /* flex-wrap: wrap; */
-    /* gap: 10px; */
-    /* display: grid; */
-    /* grid-template-columns: repeat(auto-fit, minmax(200px, auto)); */
-/* } */
-
-.keep-list {
-    gap: 10px;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, auto));
-    align-items: baseline;
-    justify-content: center;
-    justify-items: center;
-}
-
-/* .keep-list { */
 /* display: flex; */
 /* flex-wrap: wrap; */
 /* gap: 10px; */
+/* display: grid; */
+/* grid-template-columns: repeat(auto-fit, minmax(200px, auto)); */
 /* } */
+
+/* .keep-list { */
+/* gap: 10px; */
+/* display: grid; */
+/* grid-template-columns: repeat(auto-fit, minmax(200px, auto)); */
+/* align-items: baseline; */
+/* justify-content: center; */
+/* justify-items: center; */
+/* } */
+
+.keep-list {
+    columns: 3;
+    column-gap: 10px;
+}

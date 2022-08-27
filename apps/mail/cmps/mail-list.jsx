@@ -2,9 +2,8 @@
 // import { mailService } from "../services/mail.service.js"
 import { MailPreview } from "./mail-preview.jsx"
 
-export function MailList({ mails, onOpenMail, category }) {
+export function MailList({ mails, onOpenMail, category, toggleStar }) {
 
-    const { toggleStar } = props
     return (
         <section className="list-container">
             <table className="mail-list">

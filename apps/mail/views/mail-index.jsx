@@ -5,9 +5,10 @@ import { MailPreview } from "../cmps/mail-preview.jsx"
 import { MailFilter } from "../cmps/mail-filter.jsx"
 import { MailCompose } from "../cmps/mail-compose.jsx"
 import { MailDetails } from "../cmps/mail-details.jsx"
-// import {eventBusService} from "../../../services/event-bus.service.js"
+import { eventBusService } from "../../../services/event-bus.service.js"
 
 export class MailIndex extends React.Component {
+
     state = {
         mails: [],
         filterBy: null,
@@ -19,8 +20,17 @@ export class MailIndex extends React.Component {
         unreadMails: 0,
     }
 
+    unsubscribe
+
     componentDidMount() {
+        this.unsubscribe = eventBusService.on('mail-search', (searchTerm) => {
+            this.setState(({ filterBy: { ...this.state.filterBy, txt: searchTerm } }), () => this.loadMails())
+        })
         this.loadMails()
+    }
+
+    componentWillUnmount() {
+        this.unsubscribe()
     }
 
     loadMails = () => {
@@ -43,7 +53,7 @@ export class MailIndex extends React.Component {
     }
 
     onChangeCategory = (category) => {
-        this.setState({ category }, this.loadMails)
+        this.setState({ category, mailIsOpen: null }, this.loadMails)
     }
 
     onSetFilter = (filterBy) => {
@@ -52,18 +62,18 @@ export class MailIndex extends React.Component {
     }
 
     onOpenMail = (mailId) => {
+        let { mails } = this.state
         if (!mailId) {
             this.setState({ mailIsOpen: null })
         } else {
             // mailService.getById(mailId)
-            const mail = this.state.mails.find(mail => mailId === mail.id)
+            const mail = mails.find(mail => mailId === mail.id)
             if (mail.status.includes('drafts')) {
                 this.setState({ composeIsOpen: mailId })
             } else {
-                let { mails } = this.state
                 mail.isRead = true
-                const mailIdx = this.state.mails.findIndex(mail => mailId === mail.id)
                 mailService.update(mail)
+                const mailIdx = mails.findIndex(mail => mailId === mail.id)
                 mails.splice(mailIdx, 1, mail)
                 const unreadMails = mails.filter(mail => !mail.isRead).length
                 this.setState({ mails, mailIsOpen: mailId, unreadMails })
@@ -80,11 +90,22 @@ export class MailIndex extends React.Component {
         this.setState({ sortBy }, this.loadMails)
     }
 
+    toggleStar = (mailId, ev) => {
+        if (ev) ev.stopPropagation()
+        let { mails } = this.state
+        const mail = this.state.mails.find(mail => mailId === mail.id)
+        mail.isStared = !mail.isStared
+        mailService.update(mail)
+        const mailIdx = mails.findIndex(mail => mailId === mail.id)
+        mails.splice(mailIdx, 1, mail)
+        this.setState({ mails })
+    }
+
 
     render() {
         const { mails, filterBy, category, mailIsOpen, composeIsOpen, unreadMails } = this.state
         const { onSetFilter, onRemoveMail, onChangeCategory, onOpenMail, loadMails, onToggleCompose,
-             onSortBy, toggleStar } = this
+            onSortBy, toggleStar } = this
         return (
             <section className="main-layout mail-index">
                 <MailNav
@@ -114,6 +135,7 @@ export class MailIndex extends React.Component {
                             mailIsOpen={mailIsOpen}
                             onOpenMail={onOpenMail}
                             onRemoveMail={onRemoveMail}
+                            toggleStar={toggleStar}
                         />
                     }
                     {/* {mailIsOpen && <MailCompose mailIsOpen={mailIsOpen} onOpenMail={onOpenMail} />} */}
