@@ -2,8 +2,26 @@
     display: flex;
     align-content: center;
     align-items: center;
+    gap: 10px;
     justify-content: space-between;
     padding: 8px 16px;
+}
+
+.app-header .space {
+    flex-grow: 1;
+}
+
+.app-header form {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    padding: 8px 16px;
+    border-radius: 10px;
+    background-color: var(--search-box-clr);
+}
+
+.app-header input {
+    color: var(--txt-clr1);
 }
 
 nav a {
@@ -16,15 +34,15 @@ nav a {
 }
 
 .home-logo .cls-1 {
-    fill:#4b8af4;
+    fill: #4b8af4;
 }
 
 .home-logo .cls-2 {
-    fill:#ffce42;
+    fill: #ffce42;
 }
 
 .home-logo .cls-3 {
-    fill:#df5347;
+    fill: #df5347;
 }
 
 .apps {

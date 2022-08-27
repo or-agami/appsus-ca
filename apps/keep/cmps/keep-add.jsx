@@ -128,8 +128,8 @@ export class KeepAdd extends React.Component {
                             className={`btn btn-svg ${keepType === 'keep-txt' ? 'active' : ''}`}
                             title="Keep Note"
                             onClick={() => onChangeKeepType('keep-txt')}>
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="#000">
-                                <path d="M10.8149 2.60571L3.28365 23.3401H0.205522L8.8774 0.590088H10.8618L10.8149 2.60571ZM17.1274 23.3401L9.58052 2.60571L9.53365 0.590088H11.518L20.2211 23.3401H17.1274ZM16.7368 14.9182V17.387H3.95552V14.9182H16.7368Z" />
+                            <svg width="16" height="18" viewBox="0 0 16 18" fill="#000">
+                                <path d="M8.65865 1.78931L3.01021 17.3401H0.701615L7.20552 0.277588H8.6938L8.65865 1.78931ZM13.393 17.3401L7.73287 1.78931L7.69771 0.277588H9.18599L15.7133 17.3401H13.393ZM13.1001 11.0237V12.8752H3.51412V11.0237H13.1001Z" fill="#000" />
                             </svg>
                         </button>
                         <button

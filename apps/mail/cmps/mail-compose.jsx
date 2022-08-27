@@ -33,7 +33,6 @@ export class MailCompose extends React.Component {
 
     onCreateMail = (ev, isSent) => {
         ev.preventDefault()
-        // this.props.onToggleCompose()
         mailService.createMail(this.state.mail, isSent)
             .then(this.props.onToggleCompose())
             .then(this.props.loadMails())
@@ -49,12 +48,12 @@ export class MailCompose extends React.Component {
     }
 
     render() {
-        // if (!this.state.mail) return
+        
         const { to, subject, body } = this.state.mail
         return (
             <section className="mail-compose">
                 <header>
-                    {/* <button onClick={(ev) => this.onCreateMail(ev, false)}>x</button> */}
+                    
                     <h1><button onClick={(ev) => this.onCreateMail(ev, false)}>x</button><span>New massage</span></h1>
                 </header>
                 <form>

@@ -7,10 +7,7 @@ export function MailPreview({ mail, category, toggleStar, toggleRead }) {
 
     let { sentAt } = mail
     sentAt = mailService.getLocaleDate(sentAt)
-    const user = mailService.getUser()
-
-    if(from === user.email) from = 'Me'
-    if(to === user.email) to = 'Me'
+    
 
     return (
         <React.Fragment>

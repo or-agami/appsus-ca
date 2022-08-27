@@ -44,6 +44,7 @@ export class AppHeader extends React.Component {
         return (
             <header className="app-header">
                 {dynamicRendering()}
+                <div className="space"></div>
                 <section className="apps-menu"
                     onClick={onToggleMenu}>
                     <div className="svg svg-logo">
@@ -75,6 +76,7 @@ function HomeHeader() {
                 </svg>
             </div>
             <div className="logo-name">AppSus</div>
+            <div className="space"></div>
         </React.Fragment>
     )
 }
@@ -86,6 +88,7 @@ function BookHeader() {
                 <img src="/assets/icon/book-logo.png" alt="Book" />
             </div>
             <div className="logo-name">Book</div>
+            <div className="space"></div>
         </React.Fragment>
     )
 }
@@ -96,6 +99,7 @@ function MailHeader() {
             <div className="header-logo mail-logo">
                 <img src="/assets/icon/mail-logo.png" alt="Mail" />
             </div>
+            <div className="space"></div>
             <MailSearch />
         </React.Fragment>
     )
@@ -107,7 +111,8 @@ function KeepHeader() {
             <div className="header-logo keep-logo">
                 <img src="/assets/icon/keep-logo.png" alt="Keep" />
             </div>
-            <div className="logo-name">AppSus</div>
+            <div className="logo-name">Keep</div>
+            <div className="space"></div>
             <KeepFilter />
         </React.Fragment>
     )

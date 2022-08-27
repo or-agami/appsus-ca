@@ -36,8 +36,8 @@ export class KeepNav extends React.Component {
                 <button className={`btn btn-svg ${type === 'keep-txt' ? 'active' : ''}`}
                     onClick={() => onSetFilterByType('keep-txt')}
                     title="Keep Note">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#000">
-                        <path d="M10.8149 2.60571L3.28365 23.3401H0.205522L8.8774 0.590088H10.8618L10.8149 2.60571ZM17.1274 23.3401L9.58052 2.60571L9.53365 0.590088H11.518L20.2211 23.3401H17.1274ZM16.7368 14.9182V17.387H3.95552V14.9182H16.7368Z" />
+                    <svg width="25" height="24" viewBox="0 0 25 24" fill="#000">
+                        <path d="M12.5772 4.44922L6.92877 20H4.62018L11.1241 2.9375H12.6124L12.5772 4.44922ZM17.3116 20L11.6514 4.44922L11.6163 2.9375H13.1046L19.6319 20H17.3116ZM17.0186 13.6836V15.5352H7.43268V13.6836H17.0186Z" fill="#000" />
                     </svg>
                     <span>Notes</span>
                 </button>
