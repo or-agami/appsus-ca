@@ -15,7 +15,6 @@ export function App() {
     return <Router>
         <section className="app">
             <Route path="/:page?" component={AppHeader} />
-            {/* <AppHeader /> */}
             <Switch>
                 <Route path="/book/:bookId" component={BookDetails} />
                 <Route path="/book" component={BookIndex} />

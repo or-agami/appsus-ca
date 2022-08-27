@@ -31,7 +31,7 @@ export class KeepPreview extends React.Component {
                     keepInEdit={keepInEdit}
                     handleChange={handleChange}
                 />
-            case 'keep-videos':
+            case 'keep-video':
                 return <KeepVideo
                     keep={keep}
                 />
@@ -58,16 +58,13 @@ export class KeepPreview extends React.Component {
     }
 
     onDoneEdit = () => {
-        console.log('this.state.keepInEdit:', this.state.keepInEdit)
         const { keepInEdit } = this.state
         keepService.update(keepInEdit)
         this.setState({ keepInEdit: null })
     }
 
     handleChange = (keepType, { target }) => {
-        console.log('keepType:', keepType)
         const value = target.textContent
-        console.log('value:', value)
         if (keepType === 'keepTodo') {
             const id = +target.attributes.id.value
             const editedTodo = { txt: value, doneAt: null }
@@ -114,10 +111,12 @@ export class KeepPreview extends React.Component {
         this.setState({ isClrPltOpen: !this.state.isClrPltOpen })
     }
 
+    onTogglePinned = (keepId) => {
+        this.props.onTogglePinned(keepId)
+    }
+
     onColorChange = (color) => {
-        console.log('color:', color)
         const style = { backgroundColor: color }
-        // const { keepInEdit } = this.state
         const keep = { ...this.state.keep, style }
         this.setState({ keep, isClrPltOpen: false, })
 
@@ -135,13 +134,21 @@ export class KeepPreview extends React.Component {
         const { keep } = this.state
         if (!keep) return
         const { keepInEdit, inFocus, isClrPltOpen } = this.state
-        const { getKeepContent, onKeepEdit, onColorChange, handleFocus, handleBlur, onToggleClrPlt, onDownloadKeep, onDoneEdit } = this
+        const { getKeepContent, onKeepEdit, onColorChange, handleFocus, handleBlur, onToggleClrPlt, onDownloadKeep, onDoneEdit, onTogglePinned } = this
         return (
-            <div className={`keep-preview ${keep.id} ${keep.type} ${keep.style ? keep.style.backgroundColor : 'white'}`}
+            <div className={`keep-preview ${keep.id} ${keep.type} ${keep.style ? keep.style.backgroundColor : 'white'} ${keep.isPinned ? 'pinned' : ''}`}
                 // onFocus={handleFocus}
                 onBlur={handleBlur}>
                 {getKeepContent()}
                 <div className="btns btns-keep-preview">
+                    <button className="btn btn-svg btn-pin" title="Pin"
+                        onClick={() => onTogglePinned(keep.id)}>
+                        <svg width="24" height="24" viewBox="0 0 24 24">
+                            <path fill="none" d="M0 0h24v24H0z" />
+                            <path fill="#000"
+                                d="M17 4v7l2 3v2h-6v5l-1 1-1-1v-5H5v-2l2-3V4c0-1.1.9-2 2-2h6c1.11 0 2 .89 2 2zM9 4v7.75L7.5 14h9L15 11.75V4H9z" />
+                        </svg>
+                    </button>
                     <button className="btn btn-svg" title="Change Color"
                         onClick={onToggleClrPlt}>
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="#000">
@@ -153,8 +160,8 @@ export class KeepPreview extends React.Component {
                             <circle cx="17.5" cy="11.5" r="1.5" />
                         </svg>
                     </button>
-                    {!keepInEdit &&
-                        <button className="btn btn-svg" title="Edit"
+                    {!keepInEdit && keep.type !== 'keep-video' &&
+                        <button className="btn btn-svg btn-edit" title="Edit"
                             onClick={onKeepEdit}>
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="#000">
                                 <path d="M20.41 4.94l-1.35-1.35c-.78-.78-2.05-.78-2.83 0L13.4 6.41 3 16.82V21h4.18l10.46-10.46 2.77-2.77c.79-.78.79-2.05 0-2.83zm-14 14.12L5 19v-1.36l9.82-9.82 1.41 1.41-9.82 9.83z">
@@ -162,7 +169,7 @@ export class KeepPreview extends React.Component {
                             </svg>
                         </button>}
                     {keepInEdit &&
-                        <button className="btn btn-svg" title="Done"
+                        <button className="btn btn-svg btn-edit" title="Done"
                             onClick={() => onDoneEdit()}>
                             <svg width="24" height="24" viewBox="0 0 24 24">
                                 <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"></path>
@@ -211,7 +218,8 @@ function KeepTxt({ keep, handleChange, keepInEdit }) {
             <p
                 type="text"
                 onInput={(e) => handleChange('keepTxt', e)}
-                contentEditable={keepInEdit ? 'true' : 'false'}>
+                contentEditable={keepInEdit ? 'true' : 'false'}
+            >
                 {keep.info.txt}
             </p>
         </React.Fragment>
@@ -219,21 +227,23 @@ function KeepTxt({ keep, handleChange, keepInEdit }) {
 }
 
 function KeepImg({ keep, handleChange, keepInEdit }) {
-    console.log('keepInEdit === null:', keepInEdit === null)
     return (
         <React.Fragment>
             <h2>KeepImg</h2>
             {keep.info.title &&
                 <h2 className="keep-title">{keep.info.title}</h2>}
             {keepInEdit === null &&
-                // <img src={keep.info.url} alt="Keep Image" />
-                <img src="https://blog.logrocket.com/wp-content/uploads/2020/01/logrocket-blog-logo.png" />
+                <div className="img">
+                    <img src={keep.info.url} alt="Keep Image" />
+                </div>
+                // <img src="https://blog.logrocket.com/wp-content/uploads/2020/01/logrocket-blog-logo.png" />
             }
             {keepInEdit &&
                 <p
                     type="text"
                     onInput={(e) => handleChange('keepImg', e)}
-                    contentEditable={keepInEdit ? 'true' : 'false'}>
+                    contentEditable={keepInEdit ? 'true' : 'false'}
+                >
                     {keep.info.url}
                 </p>
             }
@@ -247,6 +257,7 @@ function KeepVideo({ keep }) {
             <h2>KeepVideo</h2>
             {keep.info.title &&
                 <h2 className="keep-title">{keep.info.title}</h2>}
+            <iframe width="100%" src={`https://www.youtube.com/embed/${keep.info.videoId}`}></iframe>
         </React.Fragment>
     )
 }
@@ -262,7 +273,6 @@ function KeepTodo({ keep, onTodoClick, handleChange, keepInEdit }) {
                     type="text"
                     id={idx}
                     contentEditable={keepInEdit ? 'true' : 'false'}
-                    // onInput={(e) => console.log('e.currentTarget.attributes.id: ', e.currentTarget.attributes.id)}
                     onInput={(e) => handleChange('keepTodo', e)}
                     onClick={() => onTodoClick(keep.id, idx)}>
                     {todo.txt}

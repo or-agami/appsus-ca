@@ -1,3 +1,6 @@
+import { MailFilter } from '../apps/mail/cmps/mail-filter.jsx'
+import { KeepFilter } from '../apps/keep/cmps/keep-filter.jsx'
+
 const { withRouter, Link, NavLink } = ReactRouterDOM
 export class AppHeader extends React.Component {
 
@@ -93,6 +96,7 @@ function MailHeader() {
             <div className="header-logo mail-logo">
                 <img src="/assets/icon/mail-logo.png" alt="Mail" />
             </div>
+            {/* <MailFilter /> */}
         </React.Fragment>
     )
 }
@@ -104,6 +108,7 @@ function KeepHeader() {
                 <img src="/assets/icon/keep-logo.png" alt="Keep" />
             </div>
             <div className="logo-name">AppSus</div>
+            <KeepFilter />
         </React.Fragment>
     )
 }
@@ -124,7 +129,7 @@ function Apps() {
                 <NavLink to="/book">
                     <img src="/assets/icon/book-logo.png" alt="Book" />
                     <span>Book</span>
-                    </NavLink>
+                </NavLink>
                 <NavLink to="/mail">
                     <img src="/assets/icon/mail-logo2.png" alt="Mail" />
                     <span>Mail</span>

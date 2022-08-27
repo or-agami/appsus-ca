@@ -18,5 +18,5 @@
 }
 
 .keep-nav .btn:not(.active):hover {
-    background-color: var(--keeps-icon-clr);
+    background-color: var(--keeps-icon-hover-clr);
 }

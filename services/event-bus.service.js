@@ -1,12 +1,3 @@
-export const eventBusService = 
-{
-    createEventEmitter,
-    showUserMsg,
-    showSuccessMsg,
-    showErrorMsg
-}
-
-
 
 function createEventEmitter() {
     const listenersMap = {}
@@ -26,16 +17,25 @@ function createEventEmitter() {
     }
 }
 
+export const eventBusService = createEventEmitter()
 
 
-function showUserMsg(msg) {
+export function handleMailSearch(searchTerm) {
+    eventBusService.emit('mail-search', searchTerm)
+}
+
+export function handleKeepSearch(searchTerm) {
+    eventBusService.emit('keep-search', searchTerm)
+}
+
+export function showUserMsg(msg) {
     eventBusService.emit('show-user-msg', msg)
 }
 
-function showSuccessMsg(txt) {
+export function showSuccessMsg(txt) {
     showUserMsg({ txt, type: 'success' })
 }
-function showErrorMsg(txt) {
+export function showErrorMsg(txt) {
     showUserMsg({ txt, type: 'error' })
 }
 

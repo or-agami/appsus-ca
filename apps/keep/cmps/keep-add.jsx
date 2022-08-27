@@ -112,7 +112,7 @@ export class KeepAdd extends React.Component {
                         <label
                             title="Keep Image"
                             onClick={() => onChangeKeepType('keep-img')}
-                            for="file-upload" class="custom-file-upload">
+                            htmlFor="file-upload" className="custom-file-upload">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="#000">
                                 <path
                                     d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-5-7l-3 3.72L9 13l-3 4h12l-4-5z" />
@@ -123,13 +123,16 @@ export class KeepAdd extends React.Component {
                             className={`btn btn-svg ${keepType === 'keep-video' ? 'active' : ''}`}
                             title="Keep Video"
                             onClick={() => onChangeKeepType('keep-video')}>
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="#000">
+                            {/* <svg viewBox="0 0 24 24" fill="#000">
                                 <path
                                     d="M12 22C6.49 22 2 17.51 2 12S6.49 2 12 2s10 4.04 10 9c0 3.31-2.69 6-6 6h-1.77c-.28 0-.5.22-.5.5 0 .12.05.23.13.33.41.47.64 1.06.64 1.67A2.5 2.5 0 0 1 12 22zm0-18c-4.41 0-8 3.59-8 8s3.59 8 8 8c.28 0 .5-.22.5-.5a.54.54 0 0 0-.14-.35c-.41-.46-.63-1.05-.63-1.65a2.5 2.5 0 0 1 2.5-2.5H16c2.21 0 4-1.79 4-4 0-3.86-3.59-7-8-7z" />
                                 <circle cx="6.5" cy="11.5" r="1.5" />
                                 <circle cx="9.5" cy="7.5" r="1.5" />
                                 <circle cx="14.5" cy="7.5" r="1.5" />
                                 <circle cx="17.5" cy="11.5" r="1.5" />
+                            </svg> */}
+                            <svg width="24" height="24" viewBox="0 0 576 512">
+                                <path d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z" />
                             </svg>
                         </button>
                         <button

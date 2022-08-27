@@ -11,6 +11,7 @@ export class MailIndex extends React.Component {
     state = {
         mails: [],
         filterBy: null,
+        sortBy: null,
         category: 'inbox',
         mailIsOpen: null,
         modalIsOpen: null,
@@ -23,12 +24,12 @@ export class MailIndex extends React.Component {
     }
 
     loadMails = () => {
-        const { filterBy, category } = this.state
+        const { filterBy, category, sortBy } = this.state
         if (category === 'inbox') {
-            mailService.query(filterBy, category)
-                .then(mails => this.setState({ mails, unreadMails: mails.filter(mail => !mail.isRead).length }, console.log('mails:', mails, 'unreadMails: ', mails.filter(mail => !mail.isRead).length)))
+            mailService.query(filterBy, category, sortBy)
+                .then(mails => this.setState({ mails, unreadMails: mails.filter(mail => !mail.isRead).length }))
         }
-        else mailService.query(filterBy, category)
+        else mailService.query(filterBy, category, sortBy)
             .then(mails => this.setState({ mails }))
     }
 
@@ -75,9 +76,15 @@ export class MailIndex extends React.Component {
         this.setState({ composeIsOpen: mailId })
     }
 
+    onSortBy = (sortBy) => {
+        this.setState({ sortBy }, this.loadMails)
+    }
+
+
     render() {
         const { mails, filterBy, category, mailIsOpen, composeIsOpen, unreadMails } = this.state
-        const { onSetFilter, onRemoveMail, onChangeCategory, onOpenMail, loadMails, onToggleCompose } = this
+        const { onSetFilter, onRemoveMail, onChangeCategory, onOpenMail, loadMails, onToggleCompose,
+             onSortBy, toggleStar } = this
         return (
             <section className="main-layout mail-index">
                 <MailNav
@@ -87,9 +94,10 @@ export class MailIndex extends React.Component {
                     unreadMails={unreadMails}
                 />
                 <div className="main-content">
-                    {/* <MailFilter
+                    <MailFilter
                         onSetFilter={onSetFilter}
-                    /> */}
+                        onSortBy={onSortBy}
+                    />
                     {(!mails || mails.length === 0) && <h1>No mails to display</h1>}
                     {!mailIsOpen &&
                         <MailList
@@ -98,6 +106,7 @@ export class MailIndex extends React.Component {
                             onOpenMail={onOpenMail}
                             onToggleCompose={onToggleCompose}
                             category={category}
+                            toggleStar={toggleStar}
                         />
                     }
                     {mailIsOpen &&

@@ -91,26 +91,36 @@ const gEmails = [
     },
 ]
 
-function query(filterBy, category = 'inbox') {
+function query(filterBy, category = 'inbox', sortBy) {
     let emails = _loadFromStorage()
     if (!emails) {
         emails = gEmails
         _saveToStorage(emails)
     }
-    emails = emails.filter(email => email.status.includes(category))
-    // emails = emails.filter(email => email.status === category || email.labels.includes(category))
-    // if (filterBy) {
-    //     let { txt, isRead, isStared } = filterBy
-    //     txt = txt.toLowerCase()
-    //     emails = emails.filter(email => (
-    //         (email.subject.includes(txt) || email.body.includes(txt) || email.to.includes(txt)) &&
-    //         (email.isRead === isRead) &&
-    //         ((isRead !== null) ? email.isRead === isRead : true) &&
-    //         ((isStared !== null) ? email.isStared === isStared : true)
-    //     ))
-    // }
-    console.log('emails from query2:', emails)
+    if(category === 'stared') {
+        emails = emails.filter(email => email.isStared === true)
+    } else {
+        emails = emails.filter(email => email.status.includes(category) || email.labels.includes(category))
+    }
+    if (filterBy) {
+        let { txt, isRead} = filterBy
+        txt = txt.toLowerCase()
 
+        emails = emails.filter(email => (
+            (email.subject.toLowerCase().includes(txt) || email.body.toLowerCase().includes(txt) ||
+             email.to.toLowerCase().includes(txt) || email.from.toLowerCase().includes(txt)) &&
+            ((isRead !== null) ? email.isRead === isRead : true) 
+        ))
+    }
+    if (sortBy) {
+        const {prop, desc} = sortBy
+        const direcVal = desc ? -1: 1
+        if(prop === 'date') {
+            emails.sort((m1, m2) => (m1.sentAt - m2.sentAt) *desc)
+        } else if(prop === 'title') {
+            emails.sort((m1, m2) => (m1.subject.localeCompare(m2.subject))*desc)
+        }
+    }
     return Promise.resolve(emails)
 }
 

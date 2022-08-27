@@ -17,27 +17,56 @@ const gKeeps = [
     {
         id: "n101",
         type: "keep-txt",
-        isPinned: true,
+        isPinned: false,
         info: {
             txt: "Fullstack Me Baby!"
+        },
+        style: {
+            backgroundColor: "plt1"
         }
     },
     {
         id: "n102",
         type: "keep-img",
+        isPinned: true,
         info: {
-            url: "http://some-img/me",
-            title: "Bobi and Me"
+            title: "Stack overflow picture",
+            url: "./assets/img/stack-overflow.png",
+        },
+        style: {
+            backgroundColor: "plt5"
+        }
+    },
+    {
+        id: "n103",
+        type: "keep-video",
+        isPinned: false,
+        info: {
+            title: "Best audition ever",
+            videoId: "D9g8xbLtmJQ",
+        },
+        style: {
+            backgroundColor: "plt3"
+        }
+    },
+    {
+        id: "n104",
+        type: "keep-img",
+        isPinned: false,
+        info: {
+            title: "Awesome Keyboard!",
+            url: "https://preview.redd.it/68emv6pzd8k91.jpg?width=640&crop=smart&auto=webp&s=d339c0ebc587552ea6f9bd585a3c9a71d23c6501",
         },
         style: {
             backgroundColor: "plt2"
         }
     },
     {
-        id: "n103",
+        id: "n105",
         type: "keep-todos",
+        isPinned: false,
         info: {
-            label: "Get my stuff together",
+            title: "Get my stuff together",
             todos: [
                 { txt: "Driving license", doneAt: null },
                 { txt: "Learn java script", doneAt: 187111111 },
@@ -46,11 +75,27 @@ const gKeeps = [
             ]
         }
     },
+    {
+        id: "n106",
+        type: "keep-todos",
+        isPinned: true,
+        info: {
+            title: "Today:",
+            todos: [
+                { txt: "Improve UI and UX", doneAt: 1661599881439 },
+                { txt: "Add extra features", doneAt: 1661599982639 },
+                { txt: "Impress Yaron with this app", doneAt: null },
+                { txt: "Master JavaScript", doneAt: null },
+            ]
+        },
+        style: {
+            backgroundColor: "plt5"
+        }
+    },
 ]
 
 
 function query(filterBy) {
-    console.log('filterBy from keepService:', filterBy)
     let keeps = _loadFromStorage()
     if (!keeps) {
         keeps = gKeeps
@@ -61,6 +106,28 @@ function query(filterBy) {
         keeps = keeps.filter(keep => keep.type === filterBy.type)
     }
 
+    if (filterBy.searchTerm !== '') {
+        const term = filterBy.searchTerm.toLowerCase()
+        keeps = keeps.filter((keep) => {
+            return (
+                ((keep.type === 'keep-img' || keep.type === 'keep-video') ?
+                    keep.info.title ?
+                        (keep.info.title.toLowerCase().includes(term))
+                        : false
+                    : true) &&
+                (keep.type === 'keep-txt' ?
+                    (keep.info.txt.toLowerCase().includes(term)) ||
+                    (keep.info.title ? keep.info.title.toLowerCase().includes(term) : false)
+                    : true
+                ) &&
+                (keep.type === 'keep-todos' ?
+                    (keep.info.todos.some(todo => todo.txt.toLowerCase().includes(term))) ||
+                    (keep.info.title ? keep.info.title.toLowerCase().includes(term) : false)
+                    : true
+                )
+            )
+        })
+    }
     return Promise.resolve(keeps)
 }
 
@@ -93,6 +160,7 @@ function keepAdd(newKeep, keepType) {
     let keep = {}
     keep.id = utilService.makeId()
     keep.type = keepType
+    keep.isPinned = false
     keep.info = {}
     keep.info.title = newKeep.title
     const { content } = newKeep
@@ -104,7 +172,7 @@ function keepAdd(newKeep, keepType) {
             keep.info.url = content
             break
         case 'keep-video':
-            keep.info.url = content
+            keep.info.videoId = _getVideoIdFromYTURL(content)
             break
         case 'keep-todos':
             keep.info.todos = content.split(',').map(todo => ({ txt: todo, doneAt: null }))
@@ -117,6 +185,12 @@ function keepAdd(newKeep, keepType) {
     keeps = [keep, ...keeps]
     _saveToStorage(keeps)
     return Promise.resolve()
+}
+
+function _getVideoIdFromYTURL(url) {
+    const regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+    const match = url.match(regExp);
+    return (match && match[7].length == 11) ? match[7] : false;
 }
 
 // function convertKeepToJpeg(keepId) {

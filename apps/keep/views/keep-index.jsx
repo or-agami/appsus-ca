@@ -4,6 +4,7 @@ import { KeepFilter } from "../cmps/keep-filter.jsx"
 import { KeepHeader } from "../cmps/keep-Header.jsx"
 import { KeepAdd } from "../cmps/keep-add.jsx"
 import { KeepNav } from "../cmps/keep-nav.jsx"
+import { eventBusService } from '../../../services/event-bus.service.js'
 
 export class KeepIndex extends React.Component {
 
@@ -12,12 +13,22 @@ export class KeepIndex extends React.Component {
         selectedKeep: null,
         filterBy: {
             type: null,
+            searchTerm: '',
         },
         focusOn: null,
     }
 
+    unsubscribe
+
     componentDidMount() {
+        this.unsubscribe = eventBusService.on('keep-search', (searchTerm) => {
+            this.setState(({ filterBy: { ...this.state.filterBy, searchTerm } }), () => this.loadKeeps())
+        })
         this.loadKeeps()
+    }
+
+    componentWillUnmount() {
+        this.unsubscribe()
     }
 
     loadKeeps = () => {
@@ -34,6 +45,16 @@ export class KeepIndex extends React.Component {
         }), this.loadKeeps)
     }
 
+    onTogglePinned = (keepId) => {
+        const keeps = this.state.keeps
+        const keepIdx = keeps.findIndex(keep => keep.id === keepId)
+        const keep = keeps[keepIdx]
+        keep.isPinned = !keep.isPinned
+        keeps.splice(keepIdx, 1)
+        this.setState({ keeps: [keep, ...keeps] })
+        keepService.update(keep)
+    }
+
     handleFocus = (focusOn) => {
         this.setState({ focusOn })
     }
@@ -44,7 +65,7 @@ export class KeepIndex extends React.Component {
     }
 
     render() {
-        const { onSetFilterByType, keepAdd, handleFocus } = this
+        const { onSetFilterByType, keepAdd, handleFocus, onTogglePinned } = this
         const { keeps, filterBy, focusOn } = this.state
         return (
             <section className="main-layout keep-index">
@@ -66,6 +87,7 @@ export class KeepIndex extends React.Component {
                         filterBy={filterBy}
                         handleFocus={handleFocus}
                         focusOn={focusOn}
+                        onTogglePinned={onTogglePinned}
                     />
                 </div>
             </section>

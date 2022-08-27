@@ -52,6 +52,7 @@
 .main-layout .main-content {
     flex-grow: 1;
     display: flex;
+    gap: 25px;
     flex-direction: column;
     width: calc(100% - 240px);
     background-color: white;

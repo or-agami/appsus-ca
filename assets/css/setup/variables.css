@@ -13,7 +13,8 @@
     --error-clr: #d93025;
     --star-clr: #f7cb4d;
     --line-border-clr: #edf0f2;
-    --keeps-icon-clr: #5f636828;
+    --keeps-icon-hover-clr: #5f636828;
+    --keeps-icon-clr: #5f636811;
     --keeps-active-ctg-clr:#feefc3;
     --keeps-msg-txt-clr: #f1b204;
     --box-shadow1: 0 1px 2px 0 #3c40434d, 0 1px 3px 1px #3c404326;
