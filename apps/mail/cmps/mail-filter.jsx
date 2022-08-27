@@ -67,17 +67,16 @@ export class MailFilter extends React.Component {
     render() {
 
         return (
-            <form onSubmit={(ev) => this.onFilter(ev)}>
+            <form className="mail-filter"
+            onSubmit={(ev) => this.onFilter(ev)}>
 
                 <input type="submit" hidden />
-                <label htmlFor="filter-by">Filter by:</label>
                 <select className="filter-select" name="filter-by" id="filter-by" onChange={this.onSelectFilter}>
                     <option value="all">All</option>
                     <option value="read">Read</option>
                     <option value="unread">Unread</option>
                 </select>
 
-                <label htmlFor="sort-by">Sort by:</label>
                 <select className="sort-select" name="prop" id="sort-by" onChange={this.onSetSortBy}>
                     {/* <option value="">Select Sorting</option> */}
                     <option value="date">By Date</option>

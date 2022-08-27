@@ -15,7 +15,7 @@ export class MailSearch extends React.Component {
     render() {
         const { searchTerm } = this.state
         return (
-            <section className="mail-filter">
+            <section className="search-bar mail-filter">
                 <form onSubmit={(ev) => ev.preventDefault()}>
                     <label htmlFor="search">
                         <button type="submit">

@@ -148,6 +148,7 @@ export class MailIndex extends React.Component {
                 <div className="main-content">
                     {!mailIsOpen &&
                         <MailFilter
+                            onSetFilter={onSetFilter}
                             onSortBy={onSortBy}
                         />
                     }

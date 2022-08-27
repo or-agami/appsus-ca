@@ -23,7 +23,7 @@ export class KeepNav extends React.Component {
         const { type } = this.state
         console.log('type from KeepNav:', type)
         return (
-            <nav className="btns side-nav-btns keep-nav" onClick={handleFocus}>
+            <nav className="btns side-nav side-nav-btns keep-nav" onClick={handleFocus}>
                 <button className={`btn btn-svg ${type === null ? 'active' : ''}`}
                     onClick={() => onSetFilterByType(null)}
                     title="Keep Note">

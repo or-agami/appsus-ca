@@ -20,3 +20,30 @@
 .keep-nav .btn:not(.active):hover {
     background-color: var(--keeps-icon-hover-clr);
 }
+
+.keep-list {
+    columns: 3;
+    column-gap: 10px;
+}
+
+/* MOBILE ONLY */
+@media (max-width: 650px) {
+    
+}
+
+
+/* SMALL */
+@media (min-width: 650px) {
+
+}
+
+
+/* MEDIUM */
+@media (min-width: 1040px) {
+
+}
+
+/* LARGE */
+@media (min-width: 1320px) {
+
+}

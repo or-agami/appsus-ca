@@ -265,15 +265,17 @@ function KeepTxt({ keep, handleChange, keepInEdit }) {
     return (
         <React.Fragment>
             {/* <h2>KeepTxt</h2> */}
-            {keep.info.title &&
-                <h2 className="keep-title">{keep.info.title}</h2>}
-            <p
-                type="text"
-                onInput={(e) => handleChange('keepTxt', e)}
-            // contentEditable={keepInEdit ? 'true' : 'false'}
-            >
-                {keep.info.txt}
-            </p>
+            <div className="details">
+                {keep.info.title &&
+                    <h2 className="keep-title">{keep.info.title}</h2>}
+                <p
+                    type="text"
+                    onInput={(e) => handleChange('keepTxt', e)}
+                    contentEditable={keepInEdit ? 'true' : 'false'}
+                >
+                    {keep.info.txt}
+                </p>
+            </div>
         </React.Fragment>
     )
 }
@@ -282,23 +284,25 @@ function KeepImg({ keep, handleChange, keepInEdit }) {
     return (
         <React.Fragment>
             {/* <h2>KeepImg</h2> */}
-            {keep.info.title &&
-                <h2 className="keep-title">{keep.info.title}</h2>}
             {keepInEdit === null &&
                 <div className="img">
                     <img src={keep.info.url} alt="Keep Image" />
                 </div>
                 // <img src="https://blog.logrocket.com/wp-content/uploads/2020/01/logrocket-blog-logo.png" />
             }
-            {keepInEdit &&
-                <p
-                    type="text"
-                    onInput={(e) => handleChange('keepImg', e)}
-                // contentEditable={keepInEdit ? 'true' : 'false'}
-                >
-                    {keep.info.url}
-                </p>
-            }
+            <div className="details">
+                {keepInEdit &&
+                    <p
+                        type="text"
+                        onInput={(e) => handleChange('keepImg', e)}
+                        contentEditable={keepInEdit ? 'true' : 'false'}
+                    >
+                        {keep.info.url}
+                    </p>
+                }
+                {keep.info.title &&
+                    <h2 className="keep-title">{keep.info.title}</h2>}
+            </div>
         </React.Fragment>
     )
 }
@@ -307,9 +311,11 @@ function KeepVideo({ keep }) {
     return (
         <React.Fragment>
             {/* <h2>KeepVideo</h2> */}
-            {keep.info.title &&
-                <h2 className="keep-title">{keep.info.title}</h2>}
             <iframe width="100%" src={`https://www.youtube.com/embed/${keep.info.videoId}`}></iframe>
+            <div className="details">
+                {keep.info.title &&
+                    <h2 className="keep-title">{keep.info.title}</h2>}
+            </div>
         </React.Fragment>
     )
 }
@@ -318,18 +324,20 @@ function KeepTodo({ keep, onTodoClick, handleChange, keepInEdit }) {
     return (
         <React.Fragment>
             {/* <h2>KeepTodo</h2> */}
-            {keep.info.title &&
-                <h2 className="keep-title">{keep.info.title}</h2>}
-            {keep.info.todos.map((todo, idx) => (
-                <p key={idx} className={`todo ${(todo.doneAt && !keepInEdit) ? 'done' : ''}`}
-                    type="text"
-                    id={idx}
-                    // contentEditable={keepInEdit ? 'true' : 'false'}
-                    onInput={(e) => handleChange('keepTodo', e)}
-                    onClick={() => onTodoClick(keep.id, idx)}>
-                    {todo.txt}
-                </p>
-            ))}
+            <div className="details">
+                {keep.info.title &&
+                    <h2 className="keep-title">{keep.info.title}</h2>}
+                {keep.info.todos.map((todo, idx) => (
+                    <p key={idx} className={`todo ${(todo.doneAt && !keepInEdit) ? 'done' : ''}`}
+                        type="text"
+                        id={idx}
+                        contentEditable={keepInEdit ? 'true' : 'false'}
+                        onInput={(e) => handleChange('keepTodo', e)}
+                        onClick={() => onTodoClick(keep.id, idx)}>
+                        {todo.txt}
+                    </p>
+                ))}
+            </div>
         </React.Fragment>
     )
 }
@@ -338,10 +346,12 @@ function KeepMail({ keep }) {
     return (
         <React.Fragment>
             {/* <h2>KeepMail</h2> */}
-            {keep.info.title &&
-                <h2 className="keep-title">{keep.info.title}</h2>}
-            <h3>{keep.info.subject}</h3>
-            <p>{keep.info.body}</p>
+            <div className="details">
+                {keep.info.title &&
+                    <h2 className="keep-title">{keep.info.title}</h2>}
+                <h3>{keep.info.subject}</h3>
+                <p>{keep.info.body}</p>
+            </div>
         </React.Fragment>
     )
 }

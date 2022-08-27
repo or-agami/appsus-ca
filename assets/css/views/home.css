@@ -1,0 +1,31 @@
+.home {
+    background-color: var(--main-bg-clr);
+}
+.img-container {
+    width: 90%;
+    height: 60%;
+    position: relative;
+    margin: auto;
+}
+
+.img-container img {
+    max-width: inherit;
+    object-fit: contain;
+}
+
+.img-container h1 {
+    position: absolute;
+    left: 50%;
+    top: 70%;
+    transform: translate(-50%, -50%);
+    font-size: 2.5em;
+    color: var(--msg-bgc-clr)
+}
+
+.work,
+.live,
+.behave {
+    font-size: 30px;
+    position: absolute;
+
+}

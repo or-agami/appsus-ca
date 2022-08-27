@@ -89,6 +89,90 @@ const gEmails = [
         labels: [],
         status: ['inbox']
     },
+    {
+        id: 'e107',
+        from: 'Hermionie Granger',
+        subject: 'I cannot believe I only got 99!',
+        body: `OMG I was all over the books all summer, didnt even remember to feed my cat, and now my life is OVER .`,
+        isRead: false,
+        isStared: false,
+        sentAt: 1551133930344,
+        to: 'user@appsus.com',
+        labels: [],
+        status: ['inbox']
+    },
+    {
+        id: 'e108',
+        from: 'Ronald Wisely',
+        subject: 'Did you get the mail Hermione sent?',
+        body: `Is she crazy or not? I swear she needs a specialist observation. If I had her grades I could finally get mom off my back.`,
+        isRead: false,
+        isStared: false,
+        sentAt: 1551133940354,
+        to: 'user@appsus.com',
+        labels: [],
+        status: ['inbox']
+    },
+    {
+        id: 'e114',
+        from: 'Microsoft HR',
+        subject: 'position #6521',
+        body: `Hello, we are happy to tell you that the position is yours! We have good experience with Coding Academy graduates.`,
+        isRead: false,
+        isStared: false,
+        sentAt: 15513693234,
+        to: 'user@appsus.com',
+        labels: [],
+        status: ['inbox']
+    },
+    {
+        id: 'e109',
+        from: 'El Al',
+        subject: 'Your flight is delayed',
+        body: `we are sorry, but your flight to Thailand is delayed by 6 hours. bring your computer to the terminal and stay focused .`,
+        isRead: true,
+        isStared: false,
+        sentAt: 1551133920333,
+        to: 'user@appsus.com',
+        labels: [],
+        status: ['inbox']
+    },
+    {
+        id: 'e110',
+        from: 'user@appsus.com',
+        subject: 'Hey Bobby, Im flying to Thailand',
+        body: `Ireally need a vacation after this intense course, would you like to come with me? .`,
+        isRead: true,
+        isStared: false,
+        sentAt: 15522567930344,
+        to: 'Bobby',
+        labels: [],
+        status: ['sent']
+    },
+    {
+        id: 'e111',
+        from: 'user@appsus.com',
+        subject: 'I really want to make a good project',
+        body: `I try really hard working on the project, I hope they would like it.`,
+        isRead: true,
+        isStared: false,
+        sentAt: 155117570399,
+        to: 'user@appsus.com',
+        labels: [],
+        status: ['inbox', 'sent']
+    },
+    {
+        id: 'e113',
+        from: 'Barney Stinson',
+        subject: 'Suit Up!',
+        body: `good evening my friend, we are goung to a party tonight, suit up and come with me .`,
+        isRead: false,
+        isStared: false,
+        sentAt: 1551134050777,
+        to: 'user@appsus.com',
+        labels: [],
+        status: ['inbox']
+    },
 ]
 
 function query(filterBy, category = 'inbox', sortBy) {

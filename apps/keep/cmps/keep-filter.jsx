@@ -15,7 +15,7 @@ export class KeepFilter extends React.Component {
     render() {
         const { searchTerm } = this.state
         return (
-            <section className="keep-filter">
+            <section className="search-bar keep-filter">
                 <form onSubmit={(ev) => ev.preventDefault()}>
                     <label htmlFor="by-title">
                         <svg focusable="false" height="24px" viewBox="0 0 24 24" width="24px">

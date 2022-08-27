@@ -12,7 +12,7 @@ export class MailNav extends React.Component {
         const { category, unreadMails } = this.props
         this.setState({ category, unreadMails })
     }
-    
+
     componentDidUpdate(prevProps, prevState) {
         if (prevState.unreadMails === this.props.unreadMails) return
         this.setState({ unreadMails: this.props.unreadMails })
@@ -27,7 +27,7 @@ export class MailNav extends React.Component {
         const { onChangeCategory } = this
         const { category, unreadMails } = this.state
         return (
-            <nav className="btns side-nav-btns mail-nav">
+            <nav className="btns side-nav side-nav-btns mail-nav">
                 <button className="btn btn-svg btn-compose"
                     title="Compose"
                     onClick={() => onToggleCompose(-1)}>
@@ -47,33 +47,24 @@ export class MailNav extends React.Component {
                     <span>Inbox</span>
                     {unreadMails !== 0 && <span>{unreadMails}</span>}
                 </button>
-                <button className={`btn btn-svg ${category === 'stared' ? 'active' : ''}`}
+                <button className={`btn btn-img ${category === 'stared' ? 'active' : ''}`}
                     onClick={() => onChangeCategory('stared')}
                     title="Stared">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#000">
-                        <path
-                            d="M12 22C6.49 22 2 17.51 2 12S6.49 2 12 2s10 4.04 10 9c0 3.31-2.69 6-6 6h-1.77c-.28 0-.5.22-.5.5 0 .12.05.23.13.33.41.47.64 1.06.64 1.67A2.5 2.5 0 0 1 12 22zm0-18c-4.41 0-8 3.59-8 8s3.59 8 8 8c.28 0 .5-.22.5-.5a.54.54 0 0 0-.14-.35c-.41-.46-.63-1.05-.63-1.65a2.5 2.5 0 0 1 2.5-2.5H16c2.21 0 4-1.79 4-4 0-3.86-3.59-7-8-7z" />
-                        <circle cx="6.5" cy="11.5" r="1.5" />
-                        <circle cx="9.5" cy="7.5" r="1.5" />
-                        <circle cx="14.5" cy="7.5" r="1.5" />
-                        <circle cx="17.5" cy="11.5" r="1.5" />
-                    </svg>
+                    <img src="assets/icon/star.png" alt="Star" />
                     <span>Starred</span>
                 </button>
-                <button className={`btn btn-svg ${category === 'sent' ? 'active' : ''}`}
+                <button className={`btn btn-img ${category === 'sent' ? 'active' : ''}`}
                     onClick={() => onChangeCategory('sent')}
                     title="Sent Mails">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#000">
-                        <path d="M10.8149 2.60571L3.28365 23.3401H0.205522L8.8774 0.590088H10.8618L10.8149 2.60571ZM17.1274 23.3401L9.58052 2.60571L9.53365 0.590088H11.518L20.2211 23.3401H17.1274ZM16.7368 14.9182V17.387H3.95552V14.9182H16.7368Z" />
-                    </svg>
+                    <img src="assets/icon/send.png" alt="Sent" />
                     <span>Sent</span>
                 </button>
                 <button className={`btn btn-svg ${category === 'trash' ? 'active' : ''}`}
                     onClick={() => onChangeCategory('trash')}
                     title="Trash">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#000">
-                        <path
-                            d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-5-7l-3 3.72L9 13l-3 4h12l-4-5z" />
+                    <svg width="24" height="24" viewBox="0 0 24 24">
+                        <path d="M15 4V3H9v1H4v2h1v13c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V6h1V4h-5zm2 15H7V6h10v13z"></path>
+                        <path d="M9 8h2v9H9zm4 0h2v9h-2z"></path>
                     </svg>
                     <span>Trash</span>
                 </button>

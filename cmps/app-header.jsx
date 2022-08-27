@@ -7,6 +7,7 @@ export class AppHeader extends React.Component {
     state = {
         currPage: 'home',
         isMenuOpen: false,
+        isSideMenuOpen: false,
     }
 
     componentDidMount() {
@@ -24,6 +25,12 @@ export class AppHeader extends React.Component {
         this.setState({ isMenuOpen: !this.state.isMenuOpen })
     }
 
+    onToggleSideMenu = () => {
+        this.setState({ isSideMenuOpen: !this.state.isSideMenuOpen },
+            () => {document.body.className = `side-menu-${this.state.isSideMenuOpen ? 'open' : 'closed'}`}
+        )
+    }
+
     dynamicRendering = () => {
         const { currPage } = this.state
         switch (currPage) {
@@ -39,11 +46,18 @@ export class AppHeader extends React.Component {
     }
 
     render() {
-        const { dynamicRendering, onToggleMenu } = this
-        const { isMenuOpen } = this.state
+        const { dynamicRendering, onToggleMenu, onToggleSideMenu } = this
+        const { isMenuOpen, isSideMenuOpen } = this.state
         return (
-            <header className="app-header">
+            <header className={`app-header ${isSideMenuOpen ? 'open' : 'closed'}`}>
                 {dynamicRendering()}
+                <button className="btn btn-svg btn-hamburger"
+                    onClick={onToggleSideMenu}>
+                    <svg focusable="false" viewBox="0 0 24 24">
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z">
+                        </path>
+                    </svg>
+                </button>
                 <div className="space"></div>
                 <section className="apps-menu"
                     onClick={onToggleMenu}>

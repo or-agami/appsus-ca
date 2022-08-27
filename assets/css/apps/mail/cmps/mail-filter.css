@@ -1,0 +1,12 @@
+.mail-filter {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.mail-filter select {
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: var(--search-box-clr);
+}

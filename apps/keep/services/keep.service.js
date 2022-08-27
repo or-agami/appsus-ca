@@ -23,7 +23,7 @@ const gKeeps = [
             txt: "Fullstack Me Baby!"
         },
         style: {
-            backgroundColor: "plt1"
+            backgroundColor: "plt9"
         }
     },
     {
@@ -35,7 +35,7 @@ const gKeeps = [
             url: "./assets/img/stack-overflow.png",
         },
         style: {
-            backgroundColor: "plt5"
+            backgroundColor: "plt2"
         }
     },
     {
@@ -48,7 +48,7 @@ const gKeeps = [
             body: "Hello, Cloudflare will be carrying out maintenance work to make the DNS records database more performant and increase its availability. During the maintenance window, updates to DNS records might be delayed. This includes other services that may create DNS records on your behalf like Spectrum, Load Balancing, or automatic TLS certificate validation."
         },
         style: {
-            backgroundColor: "plt5"
+            backgroundColor: "plt8"
         }
     },
     {
@@ -73,7 +73,7 @@ const gKeeps = [
             url: "https://preview.redd.it/68emv6pzd8k91.jpg?width=640&crop=smart&auto=webp&s=d339c0ebc587552ea6f9bd585a3c9a71d23c6501",
         },
         style: {
-            backgroundColor: "plt2"
+            backgroundColor: "plt5"
         }
     },
     {
@@ -104,7 +104,7 @@ const gKeeps = [
             ]
         },
         style: {
-            backgroundColor: "plt5"
+            backgroundColor: "plt10"
         }
     },
 ]

@@ -3,6 +3,15 @@
     background-color: var(--main-bg-clr);
 }
 
+.mail-nav .btn-img img {
+    width: 20px;
+    height: 20px;
+}
+.mail-nav .btn-svg svg {
+    width: 20px;
+    height: 20px;
+}
+
 .mail-nav .btn-compose {
     width: 140px;
     height: 57px;
