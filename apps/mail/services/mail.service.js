@@ -24,7 +24,7 @@ const gEmails = [
         body: 'Would love to catch up sometimes',
         isRead: false,
         isStared: false,
-        sentAt: 1551133930594,
+        sentAt: 1661610998529,
         to: 'momo@momo.com',
         labels: [],
         status: ['sent'],
@@ -36,7 +36,7 @@ const gEmails = [
         body: 'photos from australia',
         isRead: false,
         isStared: false,
-        sentAt: 1551133930594,
+        sentAt: 1661610988529,
         to: 'puki@muki.com',
         labels: [],
         status: ['sent']
@@ -48,7 +48,7 @@ const gEmails = [
         body: 'all summer collection in 25% discount!',
         isRead: false,
         isStared: false,
-        sentAt: 1551133930594,
+        sentAt: 1661600998529,
         to: 'user@appsus.com',
         labels: [],
         status: ['inbox']
@@ -60,7 +60,7 @@ const gEmails = [
         body: `Hello, Cloudflare will be carrying out maintenance work to make the DNS records database more performant and increase its availability. During the maintenance window, updates to DNS records might be delayed. This includes other services that may create DNS records on your behalf like Spectrum, Load Balancing, or automatic TLS certificate validation.`,
         isRead: false,
         isStared: false,
-        sentAt: 1551133940594,
+        sentAt: 1661611723235,
         to: 'user@appsus.com',
         labels: [],
         status: ['inbox']
@@ -70,9 +70,9 @@ const gEmails = [
         from: 'Joe Tribiani',
         subject: 'How you doin?',
         body: 'hi, iwm looking for a date to a concert, would you like to come wih me? i have very cool friends.',
-        isRead: false,
+        isRead: true,
         isStared: false,
-        sentAt: 1551133930594,
+        sentAt: 1661611613235,
         to: 'user@appsus.com',
         labels: [],
         status: ['inbox']
@@ -97,34 +97,35 @@ function query(filterBy, category = 'inbox', sortBy) {
         emails = gEmails
         _saveToStorage(emails)
     }
-    if(category === 'stared') {
+    if (category === 'stared') {
         emails = emails.filter(email => email.isStared === true)
     } else {
         emails = emails.filter(email => email.status.includes(category) || email.labels.includes(category))
     }
     if (filterBy) {
-        let { txt, isRead} = filterBy
+        let { txt, isRead } = filterBy
         txt = txt.toLowerCase()
-
-        emails = emails.filter(email => (
-            (email.subject.toLowerCase().includes(txt) || email.body.toLowerCase().includes(txt) ||
-             email.to.toLowerCase().includes(txt) || email.from.toLowerCase().includes(txt)) &&
-            ((isRead !== null) ? email.isRead === isRead : true) 
+        emails = emails.filter((email) => (
+            ((email.subject.toLowerCase().includes(txt)) ||
+                (email.body.toLowerCase().includes(txt)) ||
+                (email.to.toLowerCase().includes(txt)) ||
+                (email.from.toLowerCase().includes(txt))) &&
+            ((isRead !== null) ? email.isRead === isRead : true)
         ))
     }
     if (sortBy) {
-        const {prop, desc} = sortBy
-        const direcVal = desc ? -1: 1
-        if(prop === 'date') {
-            emails.sort((m1, m2) => (m1.sentAt - m2.sentAt) *desc)
-        } else if(prop === 'title') {
-            emails.sort((m1, m2) => (m1.subject.localeCompare(m2.subject))*desc)
+        const { prop, desc } = sortBy
+        if (prop === 'date') {
+            emails.sort((m1, m2) => (m1.sentAt - m2.sentAt) * ((desc) ? 1 : -1))
+        } else if (prop === 'title') {
+            emails.sort((m1, m2) => (m1.subject.localeCompare(m2.subject)) * ((desc) ? -1 : 1))
         }
     }
     return Promise.resolve(emails)
 }
 
 function createMail(newMail, isSent) {
+    console.log('newMail from mailService:', newMail)
     if (newMail.id !== null) _updateMail(newMail, isSent)
     else _addMail(newMail, isSent)
     return Promise.resolve()
@@ -154,6 +155,7 @@ function _updateMail(newMail, isSent) {
 
 
 function _addMail(newMail, isSent) {
+    console.log('1111111:', 1111111)
     const { to, subject, body } = newMail
     const mail = {
         from: loggedInUser.email,
@@ -167,7 +169,7 @@ function _addMail(newMail, isSent) {
         labels: [],
         status: isSent ? ['sent'] : ['drafts']
     }
-
+    console.log('mail:', mail)
     if (mail.to === loggedInUser.email) mail.status.push('inbox')
     const mails = _loadFromStorage()
     mails.unshift(mail)

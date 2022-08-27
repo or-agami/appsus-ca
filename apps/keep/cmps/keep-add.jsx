@@ -1,4 +1,5 @@
-const ColorInputIcon = '../../../assets/icon/color-input.svg'
+import { eventBusService } from "../../../services/event-bus.service.js"
+// const ColorInputIcon = '../../../assets/icon/color-input.svg'
 
 export class KeepAdd extends React.Component {
     state = {
@@ -8,6 +9,19 @@ export class KeepAdd extends React.Component {
         },
         keepType: 'keep-txt',
         isFocus: false,
+    }
+
+    unsubscribe
+
+    componentDidMount() {
+        this.unsubscribe = eventBusService.on('save-mail', (mail) => {
+            console.log('mail:', mail)
+            this.onSaveKeepFromMail(mail)
+        })
+    }
+
+    componentWillUnmount() {
+        this.unsubscribe()
     }
 
     handleChange = ({ target }) => {
@@ -20,6 +34,18 @@ export class KeepAdd extends React.Component {
                 [field]: value
             }
         }))
+    }
+
+    onSaveKeepFromMail = (mail) => {
+        const { from, subject, body } = mail
+        const newKeep = {
+            content: {
+                title: from,
+                subject,
+                body
+            }
+        }
+        this.props.onKeepAdd(newKeep, 'keep-mail')
     }
 
     onKeepAdd = (ev) => {

@@ -1,5 +1,9 @@
 import { keepService } from "../services/keep.service.js"
-export class KeepPreview extends React.Component {
+import { mailKeep } from "../../../services/event-bus.service.js"
+
+const { withRouter } = ReactRouterDOM
+
+export class _KeepPreview extends React.Component {
 
     state = {
         keep: null,
@@ -41,6 +45,10 @@ export class KeepPreview extends React.Component {
                     keepInEdit={keepInEdit}
                     onTodoClick={onTodoClick}
                     handleChange={handleChange}
+                />
+            case 'keep-mail':
+                return <KeepMail
+                    keep={keep}
                 />
             default:
                 return console.warn('Unknown keep type')
@@ -96,6 +104,32 @@ export class KeepPreview extends React.Component {
         }
     }
 
+    onSendKeepAsMail = () => {
+        const { keep } = this.state
+        const mail = {}
+        mail.subject = keep.info.title ? keep.info.title : 'My Keep'
+        switch (keep.type) {
+            case 'keep-txt':
+                mail.body = keep.info.txt
+                break
+            case 'keep-img' || 'keep-video':
+                mail.body = keep.info.url
+                break
+            // case 'keep-video':
+            //     mail.body = keep.info.url
+            case 'keep-todos':
+                mail.body = keep.info.todos.map(todo => todo.txt).join('\n')
+                break
+            case 'keep-mail':
+                mail.body = keep.info.body
+                break
+            default:
+                return console.warn('Unknown keep type')
+        }
+        this.props.history.push('/mail')
+        setTimeout(() => { mailKeep(mail) }, 2000)
+    }
+
     handleFocus = () => {
         this.setState({ inFocus: true })
         this.props.handleFocus('KeepPreview')
@@ -134,7 +168,7 @@ export class KeepPreview extends React.Component {
         const { keep } = this.state
         if (!keep) return
         const { keepInEdit, inFocus, isClrPltOpen } = this.state
-        const { getKeepContent, onKeepEdit, onColorChange, handleFocus, handleBlur, onToggleClrPlt, onDownloadKeep, onDoneEdit, onTogglePinned } = this
+        const { getKeepContent, onKeepEdit, onColorChange, handleFocus, handleBlur, onToggleClrPlt, onDownloadKeep, onDoneEdit, onTogglePinned, onSendKeepAsMail } = this
         return (
             <div className={`keep-preview ${keep.id} ${keep.type} ${keep.style ? keep.style.backgroundColor : 'white'} ${keep.isPinned ? 'pinned' : ''}`}
                 // onFocus={handleFocus}
@@ -182,6 +216,12 @@ export class KeepPreview extends React.Component {
                                 d="M5.01366 6.77078L7.00982 9.57448L7.00182 1.4184C7.00182 1.1664 7.22782 0.962402 7.50582 0.962402C7.78382 0.962402 8.00982 1.1664 8.00982 1.4184V9.57448L10.0067 6.77078C10.2067 6.57448 10.6067 6.57448 10.8067 6.77078C11.0067 6.97448 11.0067 7.37448 10.8067 7.57836L7.51184 11.9804L4.20982 7.57836C4.01044 7.37448 4.01147 6.97352 4.20982 6.77078C4.40818 6.57448 4.80982 6.57206 5.01366 6.77078ZM13.0427 16H2.04266C0.938664 16 0.0426636 15.104 0.0426636 14V8.0358C0.0426636 7.03588 1.04265 7.03575 1.04266 8.03575V14C1.04266 14.5 1.54266 15 2.04266 15H13.0427C13.5427 15 14.0427 14.5 14.0427 14V8.03566C14.03 7.03573 15.0427 6.93071 15.0427 8.03571V14C15.0427 15.105 14.1467 16 13.0427 16Z" />
                         </svg>
                     </button>
+                    <button className="btn btn-svg" title="Send as Mail"
+                        onClick={onSendKeepAsMail}>
+                        <svg height="20" width="20">
+                            <path d="M3.5 16q-.625 0-1.062-.438Q2 15.125 2 14.5v-9q0-.625.438-1.062Q2.875 4 3.5 4h13q.625 0 1.062.438Q18 4.875 18 5.5v9q0 .625-.438 1.062Q17.125 16 16.5 16Zm6.5-5L3.5 7.271V14.5h13V7.271Zm0-1.771L16.5 5.5h-13ZM3.5 7.271V5.5v9Z" />
+                        </svg>
+                    </button>
                     {/* <button className="btn btn-svg" title="Keep Todo">
                         <svg width="24" height="24" viewBox="0 0 24 24">
                         <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"></path>
@@ -218,7 +258,7 @@ function KeepTxt({ keep, handleChange, keepInEdit }) {
             <p
                 type="text"
                 onInput={(e) => handleChange('keepTxt', e)}
-                contentEditable={keepInEdit ? 'true' : 'false'}
+            // contentEditable={keepInEdit ? 'true' : 'false'}
             >
                 {keep.info.txt}
             </p>
@@ -242,7 +282,7 @@ function KeepImg({ keep, handleChange, keepInEdit }) {
                 <p
                     type="text"
                     onInput={(e) => handleChange('keepImg', e)}
-                    contentEditable={keepInEdit ? 'true' : 'false'}
+                // contentEditable={keepInEdit ? 'true' : 'false'}
                 >
                     {keep.info.url}
                 </p>
@@ -272,7 +312,7 @@ function KeepTodo({ keep, onTodoClick, handleChange, keepInEdit }) {
                 <p key={idx} className={`todo ${(todo.doneAt && !keepInEdit) ? 'done' : ''}`}
                     type="text"
                     id={idx}
-                    contentEditable={keepInEdit ? 'true' : 'false'}
+                    // contentEditable={keepInEdit ? 'true' : 'false'}
                     onInput={(e) => handleChange('keepTodo', e)}
                     onClick={() => onTodoClick(keep.id, idx)}>
                     {todo.txt}
@@ -281,3 +321,17 @@ function KeepTodo({ keep, onTodoClick, handleChange, keepInEdit }) {
         </React.Fragment>
     )
 }
+
+function KeepMail({ keep }) {
+    return (
+        <React.Fragment>
+            <h2>KeepMail</h2>
+            {keep.info.title &&
+                <h2 className="keep-title">{keep.info.title}</h2>}
+            <h3>{keep.info.subject}</h3>
+            <p>{keep.info.body}</p>
+        </React.Fragment>
+    )
+}
+
+export const KeepPreview = withRouter(_KeepPreview)

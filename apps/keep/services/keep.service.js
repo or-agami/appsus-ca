@@ -39,18 +39,32 @@ const gKeeps = [
     },
     {
         id: "n103",
+        type: "keep-mail",
+        isPinned: false,
+        info: {
+            title: "Cloudflare",
+            subject: "Maintenance to DNS Records1661611723235",
+            body: "Hello, Cloudflare will be carrying out maintenance work to make the DNS records database more performant and increase its availability. During the maintenance window, updates to DNS records might be delayed. This includes other services that may create DNS records on your behalf like Spectrum, Load Balancing, or automatic TLS certificate validation."
+        },
+        style: {
+            backgroundColor: "plt5"
+        }
+    },
+    {
+        id: "n104",
         type: "keep-video",
         isPinned: false,
         info: {
             title: "Best audition ever",
             videoId: "D9g8xbLtmJQ",
+            url: "https://www.youtube.com/watch?v=D9g8xbLtmJQ",
         },
         style: {
             backgroundColor: "plt3"
         }
     },
     {
-        id: "n104",
+        id: "n105",
         type: "keep-img",
         isPinned: false,
         info: {
@@ -62,7 +76,7 @@ const gKeeps = [
         }
     },
     {
-        id: "n105",
+        id: "n106",
         type: "keep-todos",
         isPinned: false,
         info: {
@@ -76,7 +90,7 @@ const gKeeps = [
         }
     },
     {
-        id: "n106",
+        id: "n107",
         type: "keep-todos",
         isPinned: true,
         info: {
@@ -172,10 +186,16 @@ function keepAdd(newKeep, keepType) {
             keep.info.url = content
             break
         case 'keep-video':
+            keep.info.url = content
             keep.info.videoId = _getVideoIdFromYTURL(content)
             break
         case 'keep-todos':
             keep.info.todos = content.split(',').map(todo => ({ txt: todo, doneAt: null }))
+            break
+        case 'keep-mail':
+            keep.info.title = content.title
+            keep.info.subject = content.subject
+            keep.info.body = content.body
             break
         default:
             console.warn('Unknown keep type:', keepType)
@@ -189,8 +209,8 @@ function keepAdd(newKeep, keepType) {
 
 function _getVideoIdFromYTURL(url) {
     const regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
-    const match = url.match(regExp);
-    return (match && match[7].length == 11) ? match[7] : false;
+    const match = url.match(regExp)
+    return (match && match[7].length == 11) ? match[7] : false
 }
 
 // function convertKeepToJpeg(keepId) {

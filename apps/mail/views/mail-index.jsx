@@ -11,26 +11,36 @@ export class MailIndex extends React.Component {
 
     state = {
         mails: [],
-        filterBy: null,
-        sortBy: null,
+        filterBy: {
+            txt: '',
+            isRead: null,
+        },
+        sortBy: {
+            prop: 'date',
+            desc: false,
+        },
         category: 'inbox',
         mailIsOpen: null,
         modalIsOpen: null,
         composeIsOpen: null,
+        mailKeep: null,
         unreadMails: 0,
     }
 
-    unsubscribe
+    unsubscribeMailSearch
+    unsubscribeMailKeep
 
     componentDidMount() {
-        this.unsubscribe = eventBusService.on('mail-search', (searchTerm) => {
+        this.unsubscribeMailSearch = eventBusService.on('mail-search', (searchTerm) => {
             this.setState(({ filterBy: { ...this.state.filterBy, txt: searchTerm } }), () => this.loadMails())
         })
+        this.unsubscribeMailKeep = eventBusService.on('mail-keep', (keep) => this.onSendKeepAsMail(keep))
         this.loadMails()
     }
 
     componentWillUnmount() {
-        this.unsubscribe()
+        this.unsubscribeMailSearch()
+        this.unsubscribeMailKeep()
     }
 
     loadMails = () => {
@@ -44,12 +54,8 @@ export class MailIndex extends React.Component {
     }
 
     onRemoveMail = (mailId) => {
-        // let { mails } = this.state
         mailService.removeMail(mailId)
             .then(this.loadMails)
-        // mails = mails.filter(mail => mail.id !== mailId)
-        // this.setState({ mails })
-        // eventBusService.showSuccessMsg('Email Removed')
     }
 
     onChangeCategory = (category) => {
@@ -58,7 +64,18 @@ export class MailIndex extends React.Component {
 
     onSetFilter = (filterBy) => {
         this.setState({ filterBy }, this.loadMails)
-        // showSuccessMsg('Filtered Cars')
+    }
+
+    onSendKeepAsMail = (keep) => {
+        console.log('keep:', keep)
+        console.log(1234);
+        const { subject, body } = keep
+        const newMail = {
+            to: '',
+            subject: subject,
+            body: body,
+        }
+        this.setState({ mailKeep: newMail, composeIsOpen: -2 })
     }
 
     onOpenMail = (mailId) => {
@@ -72,9 +89,7 @@ export class MailIndex extends React.Component {
                 this.setState({ composeIsOpen: mailId })
             } else {
                 mail.isRead = true
-                mailService.update(mail)
-                const mailIdx = mails.findIndex(mail => mailId === mail.id)
-                mails.splice(mailIdx, 1, mail)
+                this.updateMail(mail)
                 const unreadMails = mails.filter(mail => !mail.isRead).length
                 this.setState({ mails, mailIsOpen: mailId, unreadMails })
             }
@@ -93,19 +108,35 @@ export class MailIndex extends React.Component {
     toggleStar = (mailId, ev) => {
         if (ev) ev.stopPropagation()
         let { mails } = this.state
-        const mail = this.state.mails.find(mail => mailId === mail.id)
+        const mail = mails.find(mail => mailId === mail.id)
         mail.isStared = !mail.isStared
-        mailService.update(mail)
+        this.updateMail(mail)
+    }
+
+    toggleRead = (mailId, ev) => {
+        if (ev) ev.stopPropagation()
+        let { mails } = this.state
+        const mail = mails.find(mail => mailId === mail.id)
+        mail.isRead = !mail.isRead
+        this.updateMail(mail)
+
+    }
+
+    updateMail = (newMail) => {
+        const { mails } = this.state
+        mailService.update(newMail)
+        const mailId = newMail.id
         const mailIdx = mails.findIndex(mail => mailId === mail.id)
-        mails.splice(mailIdx, 1, mail)
+        mails.splice(mailIdx, 1, newMail)
         this.setState({ mails })
+
     }
 
 
     render() {
-        const { mails, filterBy, category, mailIsOpen, composeIsOpen, unreadMails } = this.state
+        const { mails, filterBy, category, mailIsOpen, composeIsOpen, unreadMails, mailKeep } = this.state
         const { onSetFilter, onRemoveMail, onChangeCategory, onOpenMail, loadMails, onToggleCompose,
-            onSortBy, toggleStar } = this
+            onSortBy, toggleStar, toggleRead } = this
         return (
             <section className="main-layout mail-index">
                 <MailNav
@@ -115,11 +146,13 @@ export class MailIndex extends React.Component {
                     unreadMails={unreadMails}
                 />
                 <div className="main-content">
-                    <MailFilter
-                        onSetFilter={onSetFilter}
-                        onSortBy={onSortBy}
-                    />
+                    {!mailIsOpen &&
+                        <MailFilter
+                            onSortBy={onSortBy}
+                        />
+                    }
                     {(!mails || mails.length === 0) && <h1>No mails to display</h1>}
+
                     {!mailIsOpen &&
                         <MailList
                             mails={mails}
@@ -128,6 +161,7 @@ export class MailIndex extends React.Component {
                             onToggleCompose={onToggleCompose}
                             category={category}
                             toggleStar={toggleStar}
+                            toggleRead={toggleRead}
                         />
                     }
                     {mailIsOpen &&
@@ -138,10 +172,10 @@ export class MailIndex extends React.Component {
                             toggleStar={toggleStar}
                         />
                     }
-                    {/* {mailIsOpen && <MailCompose mailIsOpen={mailIsOpen} onOpenMail={onOpenMail} />} */}
                 </div>
                 {composeIsOpen && <MailCompose
                     mailId={composeIsOpen}
+                    mailKeep={mailKeep}
                     onToggleCompose={onToggleCompose}
                     loadMails={loadMails}
                 />

@@ -32,6 +32,14 @@ export function showUserMsg(msg) {
     eventBusService.emit('show-user-msg', msg)
 }
 
+export function saveMail(mail) {
+    eventBusService.emit('save-mail', mail)
+}
+
+export function mailKeep(keep) {
+    eventBusService.emit('mail-keep', keep)
+}
+
 export function showSuccessMsg(txt) {
     showUserMsg({ txt, type: 'success' })
 }

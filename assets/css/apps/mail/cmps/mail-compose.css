@@ -4,7 +4,35 @@
     background-color: white;
     padding: 10px;
     position: fixed;
-    transform: translate(-100%,-100%);
     bottom: 0;
-    right: 0;
+    right: 5em;
+    width: 40vw;
+    height: 30vh;
+    border: 0.5px solid;
+    border-radius: 5px;
 }
+
+.mail-compose>*:not(first-child) {
+    padding: 1px;
+}
+
+.mail-compose header{
+    flex-grow: 1;
+}
+
+.mail-compose .to {
+    flex-grow: 1;
+}
+
+.mail-compose .subject {
+    flex-grow: 1;
+}
+
+.mail-compose .body {
+    flex-grow: 6;
+}
+
+.mail-compose .footer {
+    flex-grow: 3;
+}
+
