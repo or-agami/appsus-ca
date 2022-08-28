@@ -99,7 +99,7 @@ function BookHeader() {
     return (
         <React.Fragment>
             <div className="header-logo book-logo">
-                <img src="/assets/icon/book-logo.png" alt="Book" />
+                <img src="assets/icon/book-logo.png" alt="Book" />
             </div>
             <div className="logo-name">Book</div>
             <div className="space"></div>
@@ -111,7 +111,7 @@ function MailHeader() {
     return (
         <React.Fragment>
             <div className="header-logo mail-logo">
-                <img src="/assets/icon/mail-logo.png" alt="Mail" />
+                <img src="assets/icon/mail-logo.png" alt="Mail" />
             </div>
             <div className="space"></div>
             <MailSearch />
@@ -123,7 +123,7 @@ function KeepHeader() {
     return (
         <React.Fragment>
             <div className="header-logo keep-logo">
-                <img src="/assets/icon/keep-logo.png" alt="Keep" />
+                <img src="assets/icon/keep-logo.png" alt="Keep" />
             </div>
             <div className="logo-name">Keep</div>
             <div className="space"></div>
@@ -138,23 +138,23 @@ function Apps() {
         <div className="apps">
             <nav>
                 <NavLink exact to="/">
-                    <img src="/assets/icon/appsus-logo.png" alt="Home" />
+                    <img src="assets/icon/appsus-logo.png" alt="Home" />
                     <span>Home</span>
                 </NavLink>
                 <NavLink to="/about">
-                    <img src="/assets/icon/about-logo.png" alt="About" />
+                    <img src="assets/icon/about-logo.png" alt="About" />
                     <span>About</span>
                 </NavLink>
                 <NavLink to="/book">
-                    <img src="/assets/icon/book-logo.png" alt="Book" />
+                    <img src="assets/icon/book-logo.png" alt="Book" />
                     <span>Book</span>
                 </NavLink>
                 <NavLink to="/mail">
-                    <img src="/assets/icon/mail-logo2.png" alt="Mail" />
+                    <img src="assets/icon/mail-logo2.png" alt="Mail" />
                     <span>Mail</span>
                 </NavLink>
                 <NavLink to="/keep">
-                    <img src="/assets/icon/keep-logo.png" alt="Keep" />
+                    <img src="assets/icon/keep-logo.png" alt="Keep" />
                     <span>Keep</span>
                 </NavLink>
             </nav>

@@ -32,7 +32,7 @@ const gKeeps = [
         isPinned: true,
         info: {
             title: "Stack overflow picture",
-            url: "./assets/img/stack-overflow.png",
+            url: "assets/img/stack-overflow.png",
         },
         style: {
             backgroundColor: "plt2"
