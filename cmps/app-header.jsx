@@ -72,7 +72,7 @@ export class AppHeader extends React.Component {
                         <Apps />}
                 </section>
                 <div className="profile-logo">
-                    <img src="/assets/icon/profile-picture.png" alt="Profile" />
+                    <img src="assets/icon/profile-picture.png" alt="Profile" />
                 </div>
             </header >
         )
